@@ -9,7 +9,7 @@ import {api} from './routes/api';
 // Create the express app and features
 let app = express();
 let port = process.env.PORT || 3000;
-let mongoUrl = process.env.MONGO || 'mongodb://localhost/Chat ' 
+let mongoUrl = process.env.MONGO || 'mongodb://localhost/Chat' 
 
 //Connect to mongoDB
 mongoose.connect(mongoUrl);
