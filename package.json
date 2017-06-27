@@ -22,5 +22,11 @@
   "bugs": {
     "url": "https://github.com/DavidFilth/chatApp/issues"
   },
-  "homepage": "https://github.com/DavidFilth/chatApp#readme"
+  "homepage": "https://github.com/DavidFilth/chatApp#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "ejs": "^2.5.6",
+    "express": "^4.15.3",
+    "mongoose": "^4.11.0"
+  }
 }
