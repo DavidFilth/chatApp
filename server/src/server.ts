@@ -12,15 +12,16 @@ let port = process.env.PORT || 3000;
 let mongoUrl = process.env.MONGO || 'mongodb://localhost/Chat' 
 
 //Connect to mongoDB
-mongoose.connect(mongoUrl);
-
-//View Engine
-app.set('views', path.join(__dirname, '../../client/dist'));
-app.set('view engine', 'ejs');
-app.engine('html', require('ejs').renderFile);
+let db = mongoose.connect(mongoUrl, function(err){
+    if(err){
+        console.error(err);
+    } else{
+        console.log('Succesfully connected to ', mongoUrl);
+    }
+});
 
 // Set Static Folder
-app.use(express.static(path.join(__dirname, '../../client')));
+app.use(express.static(path.join(__dirname, '../../client/dist')));
 
 // Body Parser MW
 app.use(bodyParser.json());
@@ -29,3 +30,11 @@ app.use(bodyParser.urlencoded({extended: false}));
 // Set routers
 app.use('/', index);
 app.use('/api', api);
+
+// Start server
+app.listen(port, (err)=>{
+    if(err){
+        console.error(err);
+    }
+    console.log('Server started at port', port);
+})
