@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var ts = require('gulp-typescript');
 var nodemon = require('gulp-nodemon');
+var run = require('gulp-run');
 
 gulp.task('build', ()=>{
     return gulp.src('server/src/**/*.ts')
@@ -16,4 +17,7 @@ gulp.task('server', ['build', 'watch'], function(){
             env: { 'NODE_ENV': 'development' }
         });
 })
-gulp.task('default', ['build', 'watch', 'server']);
+gulp.task('client', ()=>{
+    return run('cd client && ng build --watch').exec() ;
+})
+gulp.task('default', ['build', 'watch', 'server', 'client']);
