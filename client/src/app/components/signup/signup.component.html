@@ -1,0 +1,48 @@
+<div class="container">
+  <h2 class="form-signin-heading">Sign up</h2>
+  <h4>It’s free and always will be.</h4>
+  <form class="form-signin" (ngSubmit)="signUp()" [formGroup]='formModel'>
+    <div class="row">
+      <div class="col-sm-6">
+        <input type="text" class="form-control" placeholder="Full Name" formControlName="name">
+      </div>
+      <div class="col-sm-6">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <input type="text" name="userName" class="form-control" placeholder="User Name" formControlName="userName">
+      </div>
+      <div class="col-sm-6" >
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <input type="email" name="inputEmail" class="form-control" placeholder="Email address" formControlName="email">
+      </div>
+      <div class="col-sm-6" >
+      </div>
+    </div>
+    <div formGroupName="passwordGroup">
+      <div class="row">
+        <div class="col-sm-6">
+          <input type="password" class="form-control" placeholder="Password" formControlName="password">
+        </div>
+        <div class="col-sm-6" >
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <input type="password" class="form-control" placeholder="Confirm Password" formControlName="pconfirm">
+        </div>
+        <div class="col-sm-6">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <button class="btn btn-lg btn-success btn-block" type="submit"  [disabled]="!formModel.valid">Create Account</button>
+      </div>
+    </div>
+  </form>
+</div>
