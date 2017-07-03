@@ -1,0 +1,32 @@
+<div class="container">
+  <h2 class="form-signin-heading">Please Log in</h2>
+  <form class="form-signin" (ngSubmit)="logUser()" [formGroup]='loginForm'>
+    <div class="row">
+      <div class="col-sm-6">
+        <input type="text" class="form-control" placeholder="User Name" formControlName="username" >
+      </div>
+      <div class="col-sm-6">
+        placeholder
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <input type="password" class="form-control" placeholder="Password" formControlName="password">
+      </div>
+      <div class="col-sm-6">
+        placeholder
+      </div>
+    </div>
+    <div class="checkbox">
+      <label>
+            <input type="checkbox" value="remember-me"> Remember me
+      </label>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled] ="!loginForm.valid" >Log in!</button>
+      </div>
+    </div>
+  </form>
+
+</div>
