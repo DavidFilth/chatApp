@@ -2,6 +2,10 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as mongoose from 'mongoose';
 import * as path from 'path';
+import * as passport from 'passport';
+import * as session from 'express-session';
+import * as cookieParser from 'cookie-parser';
+
 
 import {index} from './routes/index';
 import {api} from './routes/api';
@@ -20,12 +24,24 @@ let db = mongoose.connect(mongoUrl, function(err){
     }
 });
 
+// Body Parser MW
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser());
+
 // Set Static Folder
 app.use(express.static(path.join(__dirname, '../../client/dist')));
 
-// Body Parser MW
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+// Express Session
+app.use(session({
+    secret: 'werita',
+    saveUninitialized: true,
+    resave: true
+}));
+
+// Passport Init
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Set routers
 app.use('/', index);

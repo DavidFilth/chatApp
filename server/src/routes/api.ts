@@ -1,7 +1,34 @@
 import * as express from 'express';
 import { User } from '../model/user';
+import * as passport from 'passport';
+import * as passportLocal from 'passport-local';
 
 let router = express.Router();
+let LocalStrategy = passportLocal.Strategy;
+
+// Passport Configuration 
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+// Set up the Local Strategy 
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function (err, user: any) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (user.password !==  password) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
 
 // Register a User 
 router.post('/register', (req,res, next) =>{
@@ -15,4 +42,10 @@ router.post('/register', (req,res, next) =>{
     });
 });
 
+// Login a User
+router.post('/login',
+  passport.authenticate('local'),
+  function(req, res) {
+    res.send(req.body);
+  });
 export {router as api}
