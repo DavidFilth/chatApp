@@ -11,8 +11,10 @@ passport.serializeUser(function(user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(function(user, done) {
-  done(null, user);
+passport.deserializeUser(function(id, done) {
+    User.findById(id, function(err, user) {
+      done(err, user);
+    });
 });
 // Set up the Local Strategy 
 passport.use(new LocalStrategy(
@@ -20,10 +22,10 @@ passport.use(new LocalStrategy(
     User.findOne({ username: username }, function (err, user: any) {
       if (err) { return done(err); }
       if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
+        return done(null, false);
       }
       if (user.password !==  password) {
-        return done(null, false, { message: 'Incorrect password.' });
+        return done(null, false);
       }
       return done(null, user);
     });
@@ -45,7 +47,7 @@ router.post('/register', (req,res, next) =>{
 // Login a User
 router.post('/login',
   passport.authenticate('local'),
-  function(req, res) {
-    res.send(req.body);
+  function(req, res : any) {
+    res.json(req.user);
   });
 export {router as api}
