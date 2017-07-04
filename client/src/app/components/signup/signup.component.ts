@@ -8,18 +8,17 @@ import 'rxjs/add/operator/map';
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
-  providers: [UsersService]
 })
 export class SignupComponent {
   formModel: FormGroup;
   constructor(fb: FormBuilder, private usersService: UsersService ) {
     this.formModel = fb.group({
-      'name': ['Juan', Validators.required],
-      'username': ['Juan1234', [Validators.required, Validators.minLength(6)]],
-      'email': ['a@b.com', Validators.email],
+      'name': ['', Validators.required],
+      'username': ['', [Validators.required, Validators.minLength(6)]],
+      'email': ['', Validators.email],
       'passwordGroup': fb.group({
-        'password': ['123456', [Validators.required, Validators.minLength(6)]],
-        'pconfirm': ['123456']
+        'password': ['', [Validators.required, Validators.minLength(6)]],
+        'pconfirm': ['']
       }, { validator: equalValidator})
     });
   }
