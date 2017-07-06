@@ -19,5 +19,7 @@ gulp.task('server', ['build', 'watch'], function(){
 })
 gulp.task('client', ()=>{
     return run('cd client && ng build --watch').exec() ;
-})
-gulp.task('default', ['build', 'watch', 'server', 'client']);
+});
+gulp.task('backend', ['build', 'watch', 'server']);
+gulp.task('fullstack', ['build', 'watch', 'server', 'client']);
+gulp.task('default', ['backend'])
