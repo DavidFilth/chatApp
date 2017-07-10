@@ -6,9 +6,12 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UsersService {
   private auth: boolean = false;
-  private user;
+  public user;
   constructor(private http: Http ) {
     this.user = {};
+  }
+  getUser(){
+    return this.user;
   }
   signUpUser(user){
     var headers = new Headers(); 
@@ -33,5 +36,22 @@ export class UsersService {
   authenticated(){
     return this.auth;
   }
-
+  searchUser(id){
+    return this.http.get('api/search/user/id/' + id).map(function(data){
+      return data.json() ;
+    })
+  }
+  searchByEmail(email: string){
+    return this.http.get('api/search/user/email/' + email).map(function(data){
+      return data.json();
+    });
+  }
+  addContact(id){
+    var headers = new Headers(); 
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('api/addcontact', JSON.stringify({contactId: id, userId: this.user._id }), {headers: headers})
+    .map(function(data){
+      return data;
+    });  
+  }
 }
