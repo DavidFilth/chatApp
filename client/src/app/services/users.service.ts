@@ -21,7 +21,7 @@ export class UsersService {
       });
   }
   searchUser(id){
-    return this.http.get('api/search/user/id/' + id).map(function(data){
+    return this.http.get('api/user/search/id/' + id).map(function(data){
       return data.json() ;
     })
   }
