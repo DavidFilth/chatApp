@@ -18,7 +18,8 @@ import { UserToolsComponent } from './components/user-tools/user-tools.component
 import { AddContactComponent } from './components/add-contact/add-contact.component';
 import { ValidatorsService } from './services/validators.service'
 import { MessagesService } from './services/messages.service';
-import { MessagesComponent } from './components/messages/messages.component'
+import { MessagesComponent } from './components/messages/messages.component';
+import { PendingRequestsComponent } from './components/pending-requests/pending-requests.component'
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { MessagesComponent } from './components/messages/messages.component'
     CurrentDocumentComponent,
     UserToolsComponent,
     AddContactComponent,
-    MessagesComponent
+    MessagesComponent,
+    PendingRequestsComponent
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy }, 
