@@ -8,7 +8,8 @@ let userSchema = new Schema({
     email: String,
     contacts: Array,
     conversations: Array,
-    password: String
+    password: String,
+    pendingRequests: Array
 });
 let User = mongoose.model('User', userSchema);
 export {User} 
