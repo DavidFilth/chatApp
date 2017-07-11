@@ -15,7 +15,6 @@ import 'rxjs/add/operator/catch';
 
 export class LoginComponent {
   formModel: FormGroup;
-  messageError: string;
   constructor(fb: FormBuilder, 
               private usersService: UsersService,
               private router: Router,
