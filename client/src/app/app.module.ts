@@ -20,6 +20,7 @@ import { ValidatorsService } from './services/validators.service'
 import { MessagesService } from './services/messages.service';
 import { MessagesComponent } from './components/messages/messages.component';
 import { PendingRequestsComponent } from './components/pending-requests/pending-requests.component'
+import { AuthenticationService } from './services/authentication.service'
 
 @NgModule({
   imports: [
@@ -47,7 +48,8 @@ import { PendingRequestsComponent } from './components/pending-requests/pending-
     AuthGuard,
     UsersService,
     ValidatorsService,
-    MessagesService
+    MessagesService,
+    AuthenticationService
   ],
   bootstrap: [AppComponent]
 })
