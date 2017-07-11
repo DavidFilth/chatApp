@@ -4,6 +4,8 @@ import { Router } from '@angular/router'
 
 import { UsersService } from '../../services/users.service';
 import { MessagesService } from '../../services/messages.service';
+import { AuthenticationService } from '../../services/authentication.service';
+
 
 import 'rxjs/add/operator/catch';
 
@@ -15,10 +17,11 @@ import 'rxjs/add/operator/catch';
 
 export class LoginComponent {
   formModel: FormGroup;
-  constructor(fb: FormBuilder, 
+  constructor(private fb: FormBuilder, 
               private usersService: UsersService,
               private router: Router,
-              private messages: MessagesService){
+              private messages: MessagesService,
+              private authService: AuthenticationService){
     this.formModel = fb.group({
       'email': ['', Validators.email ],
       'password': ['', [Validators.required, Validators.minLength(6)]]
@@ -31,6 +34,7 @@ export class LoginComponent {
         this.messages.emit({ content: "There's something wrong with the username or the password, please try again", type: 'alert-danger'})
         return [];
       }).subscribe(data =>{
+        this.authService.authenticate(data);
         this.router.navigateByUrl('/dashboard');
         this.messages.emit({ content: 'You are now logged in', type: 'alert-info'})
       });
