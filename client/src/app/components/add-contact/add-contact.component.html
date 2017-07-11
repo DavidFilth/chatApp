@@ -1,7 +1,14 @@
 <h4>Search your contacts</h4>
-<form #f="ngForm" class="form-inline" (ngSubmit)="addFriend(f.value)">
-  <div class="form-group">
-    <input type="email" class="form-control" name="email" placeholder="Email" ngModel email>
+<form class="form-inline" [formGroup]='formModel' (ngSubmit)="sendFriendRequest()">
+  <div class="form-group" [ngClass]="{'has-error': hasError('email')}">
+    <input type="email" class="form-control" placeholder="Email" formControlName="email">
+    <span class="help-block" *ngIf="hasError('email', 'email')"> Please enter a valid email </span>
+    <span class="help-block" *ngIf="hasError('email', 'existEmail')"> There's not user registered with that email </span>
   </div>
-  <button type="submit" class="btn btn-default btn-sm" [disabled]="!f.valid">Add friend</button>
+  <div class="form-group">
+  <button type="submit" class="btn btn-success" [disabled]='!formModel.valid' >
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    Add
+  </button>
+  </div>
 </form>
