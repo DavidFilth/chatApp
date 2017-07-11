@@ -10,6 +10,9 @@ search.get('/user/id/:id', function(req, res){
       console.error(err);
       res.send(err);
     }
+    if(!data){
+      res.send(data);
+    }
     res.send({name: data.name, username: data.username});
   });
 });
