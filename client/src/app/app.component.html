@@ -12,11 +12,11 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li role="presentation" *ngIf="!usersServ.authenticated()"><a [routerLink]="['/']">Home</a></li>
-        <li role="presentation" *ngIf="usersServ.authenticated()"><a [routerLink]="['/dashboard']">Dashboard</a></li>
-        <li role="presentation" *ngIf="!usersServ.authenticated()"><a [routerLink]="['/login']">Login</a></li>
-        <li role="presentation" *ngIf="!usersServ.authenticated()"><a [routerLink]="['/signup']">Signup</a></li>
-        <li role="presentation" *ngIf="usersServ.authenticated()"><a href="#" (click)="usersServ.logout()">Logout</a></li>
+        <li role="presentation" *ngIf="!authService.authenticated()"><a [routerLink]="['/']">Home</a></li>
+        <li role="presentation" *ngIf="authService.authenticated()"><a [routerLink]="['/dashboard']">Dashboard</a></li>
+        <li role="presentation" *ngIf="!authService.authenticated()"><a [routerLink]="['/login']">Login</a></li>
+        <li role="presentation" *ngIf="!authService.authenticated()"><a [routerLink]="['/signup']">Signup</a></li>
+        <li role="presentation" *ngIf="authService.authenticated()"><a href="#" (click)="authService.logout()">Logout</a></li>
       </ul>
     </div>
   </div>

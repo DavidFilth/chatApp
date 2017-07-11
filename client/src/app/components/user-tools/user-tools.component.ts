@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { UsersService } from '../../services/users.service'
+import { AuthenticationService } from '../../services/authentication.service'
 
 @Component({
   selector: 'app-user-tools',
@@ -9,8 +9,9 @@ import { UsersService } from '../../services/users.service'
 })
 export class UserToolsComponent {
   user: {};
-  constructor(private userServ: UsersService) {
-    this.user = userServ.getUser();
+  constructor(private authService: AuthenticationService){
+
+    this.user = this.authService.getUser();
   }
 
 }

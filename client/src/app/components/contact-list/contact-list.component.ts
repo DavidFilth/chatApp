@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+
 import { UsersService } from '../../services/users.service'
+import { AuthenticationService } from '../../services/authentication.service'
 
 @Component({
   selector: 'app-contact-list',
@@ -8,13 +10,13 @@ import { UsersService } from '../../services/users.service'
 })
 export class ContactListComponent{
   contacts : Object[] = [];
-  constructor(private usersServ: UsersService) {
+  constructor(private usersServ: UsersService, private authService: AuthenticationService) {
     /*this.contacts = [
       {name: 'David'},
       {name: 'Juan'},
       {name: 'tu puta madre'}
     ];*/
-    let contacts : Array<any> = this.usersServ.getUser().contacts;
+    let contacts : any[] = this.authService.getUser().contacts;
     let context = this;
     for(let i = 0; i < contacts.length; i++){
       this.usersServ.searchUser(contacts[i])

@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+
 import { UsersService } from '../../services/users.service'
+import { AuthenticationService } from '../../services/authentication.service'
+import { MessagesService } from '../../services/messages.service'
 
 @Component({
   selector: 'app-pending-requests',
@@ -8,8 +11,8 @@ import { UsersService } from '../../services/users.service'
 })
 export class PendingRequestsComponent{
   requests: any[] =[]
-  constructor(private usersServ: UsersService) {
-    let requests: any[] = this.usersServ.getUser().pendingRequests;
+  constructor(private usersServ: UsersService, private authService: AuthenticationService, private messageServ: MessagesService) {
+    let requests: any[] = this.authService.getUser().pendingRequests;
     let context = this;
     for(let i =0; i < requests.length; i++){
       (function(){
@@ -22,10 +25,15 @@ export class PendingRequestsComponent{
     }
   }
   resolveFriendReq(id, res){
-    let user = this.usersServ.getUser();
-    this.usersServ.resolveRequest({userId: user._id, contactId: id, response: res})
+    let user = this.authService.getUser();
+    let context =this;
+    this.usersServ.resolveFriendshipRequest({userId: user._id, contactId: id, response: res})
       .subscribe(function(data){
-        console.log(data);
+        if(data.status){
+          context.messageServ.emit({content: `You are now friends with ${data.contactInfo}`, type: "alert-info" });
+        }else{
+          context.messageServ.emit({content: `You have rejected the friendship request`, type: "alert-warning" });          
+        }
     });
   }
 
