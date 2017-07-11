@@ -1,12 +1,21 @@
-div.dropdown{
+div.contenedor{
     float: right;
-    margin-top: 22px;
+}
+div.dropdown{
+    display: inline;
 }
 button{
-    border-radius: 50%;
     border: none;
+    width: 30px;
+    height: 30px;
     background: none;
 }
-button:hover{
-    background: #ddd;
+.pending{
+    display: inline-block;
+    position: absolute;
+    top:0px;
+    right: 0px;
+    color: red;
+    z-index: 100;
+    font-size: 13px;
 }
