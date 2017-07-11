@@ -9,12 +9,12 @@ import { UsersService } from '../../services/users.service'
 export class ContactListComponent{
   contacts : Object[] = [];
   constructor(private usersServ: UsersService) {
-    let contacts : Array<any> = this.usersServ.getUser().contacts;
     /*this.contacts = [
       {name: 'David'},
       {name: 'Juan'},
       {name: 'tu puta madre'}
     ];*/
+    let contacts : Array<any> = this.usersServ.getUser().contacts;
     let context = this;
     for(let i = 0; i < contacts.length; i++){
       this.usersServ.searchUser(contacts[i])
