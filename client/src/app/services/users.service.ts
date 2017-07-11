@@ -41,17 +41,20 @@ export class UsersService {
       return data.json() ;
     })
   }
-  searchByEmail(email: string){
-    return this.http.get('api/search/user/email/' + email).map(function(data){
-      return data.json();
-    });
-  }
-  addContact(id){
+  friendshipRequest(data){
     var headers = new Headers(); 
     headers.append('Content-Type', 'application/json');
-    return this.http.post('api/addcontact', JSON.stringify({contactId: id, userId: this.user._id }), {headers: headers})
-    .map(function(data){
-      return data;
-    });  
+    return this.http.post('api/user/sendFriendshipRequest',JSON.stringify(data), {headers: headers})
+      .map(function(res){
+        return res.json();
+      });
+  }
+  resolveRequest(data){
+    var headers = new Headers(); 
+    headers.append('Content-Type', 'application/json');
+    return this.http.post('api/user/resolveFriendRequest', JSON.stringify(data), {headers: headers})
+      .map(function(res){
+        return res.json();
+      })
   }
 }
