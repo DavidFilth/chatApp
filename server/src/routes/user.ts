@@ -67,12 +67,11 @@ userRoute.post('/resolveFriendRequest', function(req, res){
           } else{
             contact.contacts.push(req.body.userId);
             contact.save();
-            res.send({status: true});
+            res.send({status: true, contactName: contact.name});
           }
         });
       }
     }
-  })
+  });
 });
-
 export {userRoute}
