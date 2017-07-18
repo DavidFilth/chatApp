@@ -10,12 +10,10 @@ button{
     height: 30px;
     background: none;
 }
-.pending{
-    display: inline-block;
-    position: absolute;
-    top:0px;
-    right: 0px;
-    color: red;
-    z-index: 100;
-    font-size: 13px;
-}
+.badge-notify{
+   background:red;
+   position:relative;
+   top: -5px;
+   left: -10px;
+   font-size: 10px;
+  }

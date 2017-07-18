@@ -20,7 +20,10 @@ import { ValidatorsService } from './services/validators.service'
 import { MessagesService } from './services/messages.service';
 import { MessagesComponent } from './components/messages/messages.component';
 import { PendingRequestsComponent } from './components/pending-requests/pending-requests.component'
-import { AuthenticationService } from './services/authentication.service'
+import { AuthenticationService } from './services/authentication.service';
+import { ConversationsListComponent } from './components/conversations-list/conversations-list.component'
+import { SocketService } from './services/socket.service';
+import { SendMessageComponent } from './components/send-message/send-message.component'
 
 @NgModule({
   imports: [
@@ -41,7 +44,9 @@ import { AuthenticationService } from './services/authentication.service'
     UserToolsComponent,
     AddContactComponent,
     MessagesComponent,
-    PendingRequestsComponent
+    PendingRequestsComponent,
+    ConversationsListComponent,
+    SendMessageComponent
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy }, 
@@ -49,7 +54,8 @@ import { AuthenticationService } from './services/authentication.service'
     UsersService,
     ValidatorsService,
     MessagesService,
-    AuthenticationService
+    AuthenticationService,
+    SocketService
   ],
   bootstrap: [AppComponent]
 })

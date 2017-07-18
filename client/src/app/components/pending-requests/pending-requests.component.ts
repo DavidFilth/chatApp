@@ -10,30 +10,21 @@ import { MessagesService } from '../../services/messages.service'
   styleUrls: ['./pending-requests.component.css']
 })
 export class PendingRequestsComponent{
-  requests: any[] =[]
+  private user : customTypes.User;
   constructor(private usersServ: UsersService, private authService: AuthenticationService, private messageServ: MessagesService) {
-    let requests: any[] = this.authService.getUser().pendingRequests;
-    let context = this;
-    for(let i =0; i < requests.length; i++){
-      (function(){
-        context.usersServ.searchUser(requests[i])
-        .subscribe(function(data){
-          data.id = requests[i]
-          context.requests.push(data);
-        });
-      })();
-    }
+    this.user = this.authService.getUser();
   }
-  resolveFriendReq(id, res){
-    let user = this.authService.getUser();
-    let context =this;
-    this.usersServ.resolveFriendshipRequest({userId: user._id, contactId: id, response: res})
-      .subscribe(function(data){
+  resolveFriendRequest( contact : customTypes.contactInfo , res : boolean){
+    this.usersServ.resolveFriendshipRequest({userId: this.user.id, contactId: contact.id, response: res})
+      .subscribe((data) =>{
+        this.authService.removeRequest(contact);
         if(data.status){
-          context.messageServ.emit({content: `You are now friends with ${data.contactInfo}`, type: "alert-info" });
+          this.authService.pushContacts(contact);
+          this.messageServ.emit({content: `You are now friends with ${contact.name}`, type: "alert-info" });
         }else{
-          context.messageServ.emit({content: `You have rejected the friendship request`, type: "alert-warning" });          
+          this.messageServ.emit({content: `You have rejected the friendship request of ${ contact.name }`, type: "alert-warning" });
         }
+        this.user = this.authService.getUser();
     });
   }
 

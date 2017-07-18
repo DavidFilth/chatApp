@@ -1,1 +1,7 @@
-<h1 class="page-header">Dashboard</h1>
+<div class="head">
+    <img src="http://placehold.it/128x128" alt="none" class="avatar ">
+    <h3 class="inline"> Lupita </h3>
+</div>
+<div class="messages">
+    <div *ngFor="let message of messages" class="arrow_box pull-right"><strong> {{message.user}} </strong> : {{message.content }}</div>
+</div>

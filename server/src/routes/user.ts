@@ -1,10 +1,12 @@
 import * as express from 'express';
 import { User } from '../model/user';
+import { Conversation } from '../model/conversation'
+import { Message } from '../model/message'
 
 let userRoute = express.Router();
 
 // Get user's name and username
-userRoute.get('/search/id/:id', function(req, res){
+userRoute.get('/search/contact/:id', function(req, res){
   User.findById(req.params.id, function(err, data: any){
     if(err){
       console.error(err);
@@ -13,7 +15,29 @@ userRoute.get('/search/id/:id', function(req, res){
     if(!data){
       res.send(data);
     }
-    res.send({name: data.name, username: data.username});
+    res.send({id: data._id, name: data.name, email: data.username});
+  });
+});
+userRoute.get('/search/conversation/:id', function(req, res){
+  Conversation.findById(req.params.id, function(err, data : any){
+    if(err){
+      res.send(err);
+    } else if(!data){
+      res.send(data);
+    } else{
+      res.send(data);
+    }
+  })
+});
+userRoute.get('/search/message/:id', function(req, res){
+  Message.findById(req.params.id, function(err, data){
+    if(err){
+      res.send(err);
+    } else if(!data){ 
+      res.send(data);
+    } else{
+      res.send(data);
+    }
   });
 });
 userRoute.post('/sendFriendshipRequest', function(req, res){

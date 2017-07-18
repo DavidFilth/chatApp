@@ -3,17 +3,17 @@
   <div class="dropdown">
     <button type="button" class="dropdown-toggle" [routerLink]="['/dashboard/requests']">
     <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-    <span class="pending" *ngIf="user.pendingRequests.length > 0" > {{ user.pendingRequests.length }} </span>
   </button>
+  <span class="badge badge-notify" *ngIf="user.pendingRequests.length > 0" > {{ user.pendingRequests.length }}</span>
   </div>
   <div class="dropdown">
     <button class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
     <span class="glyphicon glyphicon-option-vertical"></span>
   </button>
     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-      <li><a [routerLink]="['/dashboard']">My Contacts</a></li>
+      <li><a [routerLink]="['/dashboard']">My conversations</a></li>
       <li><a [routerLink]="['/dashboard/addcontact']">Add Friend</a></li>
-      <li><a [routerLink]="['/dashboard/conversations']">My conversations</a></li>
+      <li><a [routerLink]="['/dashboard/friends']">My Contacts</a></li>
       <li><a [routerLink]="['/dashboard/settings']">Settings</a></li>
     </ul>
   </div>

@@ -23,8 +23,8 @@ export class LoginComponent {
               private messages: MessagesService,
               private authService: AuthenticationService){
     this.formModel = fb.group({
-      'email': ['', Validators.email ],
-      'password': ['', [Validators.required, Validators.minLength(6)]]
+      'email': ['a@b.com', Validators.email ],
+      'password': ['tumama', [Validators.required, Validators.minLength(6)]]
     });
   }
   logUser(){

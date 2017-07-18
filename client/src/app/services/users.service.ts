@@ -21,8 +21,18 @@ export class UsersService {
       });
   }
   searchUser(id){
-    return this.http.get('api/user/search/id/' + id).map(function(data){
+    return this.http.get('api/user/search/contact/' + id).map(function(data){
       return data.json() ;
+    });
+  }
+  searchConversation( conversation : string ){
+    return this.http.get('api/user/search/conversation/' + conversation).map(function(data){
+      return data.json() ;
+    });
+  }
+  searchMessage(id){
+    return this.http.get('api/user/search/message/' + id).map(function(data){
+      return data.json();
     })
   }
   sendFriendshipRequest(data){

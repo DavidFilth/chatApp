@@ -1,7 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+body, html{
+  height: 100%;
+}
 body {
   padding-top: 60px;
-  padding-bottom: 40px;
   background-color: #eee;
 }
 .avatar{
@@ -18,4 +20,27 @@ body {
   transform: translateZ(0);
   -webkit-transform: scale(0.70);
   -moz-transform: scale(0.70)
+}
+
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 5px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(150,120,150,0.8); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(120,90,120,0.4); 
 }

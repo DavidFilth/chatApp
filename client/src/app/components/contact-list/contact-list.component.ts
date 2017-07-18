@@ -9,20 +9,8 @@ import { AuthenticationService } from '../../services/authentication.service'
   styleUrls: ['./contact-list.component.css']
 })
 export class ContactListComponent{
-  contacts : Object[] = [];
+  contacts : customTypes.contactInfo[];
   constructor(private usersServ: UsersService, private authService: AuthenticationService) {
-    /*this.contacts = [
-      {name: 'David'},
-      {name: 'Juan'},
-      {name: 'tu puta madre'}
-    ];*/
-    let contacts : any[] = this.authService.getUser().contacts;
-    let context = this;
-    for(let i = 0; i < contacts.length; i++){
-      this.usersServ.searchUser(contacts[i])
-        .subscribe(function(data){
-          context.contacts.push(data);
-        });
-    }
+    this.contacts  = this.authService.getUser().contacts;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Directive } from '@angular/core';
+import { Component, Directive, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { UsersService } from '../../services/users.service';
@@ -12,26 +12,27 @@ import { AuthenticationService } from '../../services/authentication.service';
   styleUrls: ['./add-contact.component.css']
 })
 export class AddContactComponent{
+  private user : customTypes.User;
   formModel: FormGroup;
   constructor(
     private usersServ: UsersService, 
     private validators: ValidatorsService, 
     private fb: FormBuilder, 
     private message: MessagesService,
-    private authService: AuthenticationService) {
-    this.formModel = fb.group({
-      'email': ['', Validators.email, validators.existingEmail]
-    })
+    private auth: AuthenticationService) {
+      this.user = this.auth.getUser();
+      this.formModel = fb.group({
+        'email': ['', Validators.email, validators.existingEmail]
+      });
   }
   sendFriendRequest(){
     let context = this;
     let input = this.formModel.value;
-    let user: any = this.authService.getUser();
-    if(input.email === user.email ){
+    if(input.email === this.user.email ){
       this.message.emit({content:"You can't send a friend request to yourself", type: "alert-warning" });
     } else{
       this.usersServ.sendFriendshipRequest({
-          userId: user._id,
+          userId: this.user.id,
           contact: input.email})
         .subscribe(function(data: any){
           if(data.status === 0) {

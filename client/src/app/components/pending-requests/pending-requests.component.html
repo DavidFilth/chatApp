@@ -1,10 +1,10 @@
 <h4>Friend Requests</h4>
 <hr>
 <ul class="nav nav-sidebar">
-    <li *ngFor="let req of requests">
+    <li *ngFor="let req of user.pendingRequests">
         <img src="http://placehold.it/128x128" alt="none" class="avatar ">
           {{ req.name }}
-          <button type="button" class="btn btn-danger btn-xs pull-right" (click)="resolveFriendReq(req.id, false)" > Decline</button>
-          <button type="button" class="btn btn-success btn-xs pull-right" (click)="resolveFriendReq(req.id, true)"> Accept</button>
+          <button type="button" class="btn btn-danger btn-xs pull-right" (click)="resolveFriendRequest(req, false)" > Decline</button>
+          <button type="button" class="btn btn-success btn-xs pull-right" (click)="resolveFriendRequest(req, true)"> Accept</button>
     </li>
 </ul>

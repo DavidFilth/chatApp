@@ -5,7 +5,7 @@ import * as path from 'path';
 import * as passport from 'passport';
 import * as session from 'express-session';
 import * as cookieParser from 'cookie-parser';
-
+import * as socketIO from 'socket.io';
 
 import {index} from './routes/index';
 import {api} from './routes/api';
@@ -13,7 +13,7 @@ import {api} from './routes/api';
 // Create the express app and features
 let app = express();
 let port = process.env.PORT || 3000;
-let mongoUrl = process.env.MONGO || 'mongodb://localhost/Chat' 
+let mongoUrl = process.env.MONGO || 'mongodb://localhost/Chat';
 
 //Connect to mongoDB
 let db = mongoose.connect(mongoUrl, function(err){
@@ -34,7 +34,7 @@ app.use(express.static(path.join(__dirname, '../../client/dist')));
 
 // Express Session
 app.use(session({
-    secret: 'werita',
+    secret: 'Te amo werita hermosa',
     saveUninitialized: true,
     resave: true
 }));
@@ -48,9 +48,15 @@ app.use('/', index);
 app.use('/api', api);
 
 // Start server
-app.listen(port, (err)=>{
+let server = app.listen(port, (err)=>{
     if(err){
         console.error(err);
     }
     console.log('Server started at port', port);
-})
+});
+let io = socketIO(server);
+
+io.on('connection', function (socket) {
+    socket.join(socket.handshake.query.userId);
+    socket.on('disconnect', ()=> {console.log('user disconected')});
+});
