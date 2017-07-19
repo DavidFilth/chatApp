@@ -1,6 +1,6 @@
 <h4>My contacts</h4>
 <hr>
 <ul class="nav nav-sidebar">
-    <li *ngFor="let contact of contacts">
+    <li *ngFor="let contact of contacts" (click)='contactSelected.emit(contact)' >
         <a > <img src="http://placehold.it/128x128" alt="none" class="avatar "> {{ contact.name }} </a></li>
 </ul>

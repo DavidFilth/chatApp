@@ -1,7 +1,8 @@
 <div class="head">
     <img src="http://placehold.it/128x128" alt="none" class="avatar ">
-    <h3 class="inline"> Lupita </h3>
+    <h3 class="inline"> {{ conversation.name }} </h3>
+    {{conversation.participants}}
 </div>
 <div class="messages">
-    <div *ngFor="let message of messages" class="arrow_box pull-right"><strong> {{message.user}} </strong> : {{message.content }}</div>
+    <div *ngFor="let message of conversation.messages" class="arrow_box pull-right"><strong> id </strong> : {{message}}  </div>
 </div>

@@ -1,6 +1,6 @@
 <h4>Recents</h4>
 <hr>
 <ul class="nav nav-sidebar">
-    <li *ngFor="let conv of conversations">
+    <li *ngFor="let conv of conversations" (click)="conversationSelected.emit(conv)">
         <a> <img src="http://placehold.it/128x128" alt="none" class="avatar "> {{ conv.name }} </a></li>
 </ul>

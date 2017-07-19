@@ -1,13 +1,21 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-4 col-md-3 sidebar">
-      <app-user-tools></app-user-tools>
+      <user-tools [selectedTool]="tool" [user]='myUser'></user-tools>
       <hr>
-      <router-outlet></router-outlet>
+      <messages></messages>
+      <div [ngSwitch]='tool.value'>
+        <pending-requests *ngSwitchCase="'pending-requests'" [user]="myUser" ></pending-requests>
+        <conversations-list *ngSwitchCase="'conversation-list'" [conversations]="myUser.conversations" (conversationSelected)="changeConversation($event)" ></conversations-list>
+        <contact-list *ngSwitchCase="'contact-list'" [contacts]="myUser.contacts" (contactSelected)="changeConversation($event)" ></contact-list>
+        <add-contact *ngSwitchCase="'add-contact'" [user]="myUser" ></add-contact>
+      </div>
     </div>
     <div class="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
-      <app-current-document ></app-current-document>
-      <app-send-message></app-send-message>
+      <div *ngIf='conversation'>
+        <current-document [conversation]="conversation"></current-document>
+        <send-message (send)="sendMessageHandler($event)" ></send-message>
+      </div>
     </div>
   </div>
 </div>

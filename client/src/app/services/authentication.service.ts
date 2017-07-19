@@ -30,7 +30,6 @@ export class AuthenticationService {
       conversations: [],
       pendingRequests: []
     }
-    console.log('user: ', this.user);
     // Adding the contacts;
     for(let i = 0; i < user.contacts.length; i++){
       this.userServ.searchUser(user.contacts[i]).subscribe((res : customTypes.contactInfo)=>{
@@ -52,13 +51,7 @@ export class AuthenticationService {
     }
     this.auth = true;
   }
-  pushContacts(contact : customTypes.contactInfo){
-    this.user.contacts.push(contact);
-  }
-  removeRequest(contact){
-    let index = this.user.pendingRequests.indexOf(contact);
-    if(index != -1){
-      this.user.pendingRequests.splice(index, 1);
-    }
+  updateUser(user : customTypes.User){
+    this.user = user;
   }
 }

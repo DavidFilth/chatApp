@@ -10,7 +10,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import 'rxjs/add/operator/catch';
 
 @Component({
-  selector: 'app-login',
+  selector: 'login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })

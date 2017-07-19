@@ -1,17 +1,15 @@
-import { Component } from '@angular/core';
-
-import { AuthenticationService } from '../../services/authentication.service'
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-user-tools',
+  selector: 'user-tools',
   templateUrl: './user-tools.component.html',
   styleUrls: ['./user-tools.component.css']
 })
 export class UserToolsComponent {
-  user: {};
-  constructor(private authService: AuthenticationService){
-
-    this.user = this.authService.getUser();
+  @Input() selectedTool : {value: string};
+  @Input() user : customTypes.User;
+  constructor(){
   }
+  changeTool(value : string){this.selectedTool.value = value}
 
 }

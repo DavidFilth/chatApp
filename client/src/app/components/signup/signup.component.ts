@@ -9,7 +9,7 @@ import { MessagesService } from '../../services/messages.service';
 import 'rxjs/add/operator/map';
 
 @Component({
-  selector: 'app-signup',
+  selector: 'signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
 })
@@ -29,7 +29,7 @@ export class SignupComponent {
   signUp(){
     let  {name, username, email, passwordGroup: {password: password} } = this.formModel.value;
     this.usersService.signUpUser({name, username, email, password}).subscribe(data =>{
-      this.router.navigateByUrl('/login',"You are now registered");
+      this.router.navigateByUrl('/login');
       this.messages.emit({content: 'You are now registered', type:'alert-info'})
     });
   }

@@ -1,16 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../../services/users.service';
-import { AuthenticationService } from '../../services/authentication.service'
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'app-conversations-list',
+  selector: 'conversations-list',
   templateUrl: './conversations-list.component.html',
   styleUrls: ['./conversations-list.component.css']
 })
 export class ConversationsListComponent{
-  conversations: customTypes.Conversation[];
-  constructor( private usersServ: UsersService, private authService: AuthenticationService) {
-    this.conversations = this.authService.getUser().conversations;
-  }
+  @Input() conversations : customTypes.Conversation[];
+  @Output() conversationSelected  = new EventEmitter();
+  constructor() {}
 
 }
