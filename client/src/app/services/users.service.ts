@@ -51,4 +51,18 @@ export class UsersService {
         return res.json();
       })
   }
+  postMessage(data){
+    let headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    return this.http.post('api/user/postMessage', JSON.stringify(data), {headers: headers})
+      .map(function(res){
+        return res.json();
+      });
+  }
+  createConversation(data){
+    let headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    return this.http.post('api/user/createConversation', JSON.stringify(data), {headers: headers})
+      .map(res => res.json());
+  }
 }

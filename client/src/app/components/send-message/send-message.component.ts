@@ -7,6 +7,8 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 export class SendMessageComponent {
   @Output() send = new EventEmitter();
+  @Output() typing = new EventEmitter();
+  @Output() stopTyping = new EventEmitter();
   constructor() { }
   
 }

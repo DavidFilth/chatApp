@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
 import { ValidatorsService } from '../../services/validators.service';
 import { MessagesService } from '../../services/messages.service';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'add-contact',
@@ -17,7 +18,8 @@ export class AddContactComponent{
     private usersServ: UsersService, 
     private validators: ValidatorsService, 
     private fb: FormBuilder, 
-    private message: MessagesService) {
+    private message: MessagesService,
+    private socket: SocketService) {
       this.formModel = fb.group({
         'email': ['', Validators.email, validators.existingEmail]
       });
@@ -28,20 +30,26 @@ export class AddContactComponent{
       this.message.emit({content:"You can't send a friend request to yourself", type: "alert-warning" });
     } else{
       this.usersServ.sendFriendshipRequest({
-          userId: this.user.id,
+          userId: this.user._id,
           contact: input.email})
-        .subscribe((data: any) =>{
+        .subscribe((data: customTypes.friendRequest) =>{
           if(data.status === 0) {
-            this.message.emit({content:`Your request has been sent to ${data.name}`, type: "alert-info" });
+            this.message.emit({content:`Your request has been sent to ${data.contact.name}`, type: "alert-info" });
+            this.socket.sendFriendRequest(data.contact._id, {
+              _id: this.user._id,
+              name: this.user.name,
+              username: this.user.username,
+              email: this.user.email
+            });
           }
           if(data.status === 1) {
-            this.message.emit({content:`${data.name} is already in your contact list`, type: "alert-warning" });
+            this.message.emit({content:`${data.contact.name} is already in your contact list`, type: "alert-warning" });
           }
           if(data.status === 2) {
-            this.message.emit({content:`You have already send a request to ${data.name}`, type: "alert-warning" });
+            this.message.emit({content:`You have already send a request to ${data.contact.name}`, type: "alert-warning" });
           }
           if(data.status === 3){
-            this.message.emit({content:`You have a pending friend request from ${data.name}`, type: "alert-warning" });
+            this.message.emit({content:`You have a pending friend request from ${data.contact.name}`, type: "alert-warning" });
           }
         });
     }

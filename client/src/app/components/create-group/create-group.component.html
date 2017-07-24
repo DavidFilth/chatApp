@@ -1,0 +1,23 @@
+<h4 class="form-signin-heading">
+  Create new Group</h4>
+<form class="form-horizontal" #f="ngForm" (ngSubmit)="createGroup.emit({'name': f.value.groupName, 'participants': participants })">
+  <div class="form-group">
+    <div class="col-sm-9">
+      <input name="groupName" type="text" class="form-control" placeholder="Group name" ngModel required>
+    </div>
+    <div class="col-sm-3">
+      <button class="btn btn-primary btn-success" type="submit" [disabled]="!f.valid || participants.length === 0">
+        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+</form>
+<div class="maxHeight">
+  <h4>Participants</h4>
+  <hr>
+  <contact-list [contacts]="participants" (contactSelected)="removeParticipant($event)"></contact-list>
+</div>
+<div>
+  <h4>Contacts</h4>
+  <contact-list [contacts]="contacts" (contactSelected)="addParticipant($event)"></contact-list>
+</div>

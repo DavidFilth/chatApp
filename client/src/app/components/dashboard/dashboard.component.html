@@ -5,16 +5,17 @@
       <hr>
       <messages></messages>
       <div [ngSwitch]='tool.value'>
+        <create-group *ngSwitchCase="'create-group'" [user]="myUser" (createGroup)="createGroupHandler($event)" ></create-group>
         <pending-requests *ngSwitchCase="'pending-requests'" [user]="myUser" ></pending-requests>
-        <conversations-list *ngSwitchCase="'conversation-list'" [conversations]="myUser.conversations" (conversationSelected)="changeConversation($event)" ></conversations-list>
-        <contact-list *ngSwitchCase="'contact-list'" [contacts]="myUser.contacts" (contactSelected)="changeConversation($event)" ></contact-list>
+        <conversations-list *ngSwitchCase="'conversation-list'" [conversations]="myUser.conversations" (conversationSelected)="changeConversation($event)" [user]="myUser"></conversations-list>
+        <contact-list *ngSwitchCase="'contact-list'" [contacts]="myUser.contacts" (contactSelected)="privateConversation($event)" ></contact-list>
         <add-contact *ngSwitchCase="'add-contact'" [user]="myUser" ></add-contact>
       </div>
     </div>
     <div class="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
       <div *ngIf='conversation'>
-        <current-document [conversation]="conversation"></current-document>
-        <send-message (send)="sendMessageHandler($event)" ></send-message>
+        <current-document [conversation]="conversation" [userId]="myUser._id"></current-document>
+        <send-message (send)="sendMessageHandler($event)" (typing)="typingHandler()" (stopTyping)="stopTypingHandler()"></send-message>
       </div>
     </div>
   </div>

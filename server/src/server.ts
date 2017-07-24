@@ -57,6 +57,27 @@ let server = app.listen(port, (err)=>{
 let io = socketIO(server);
 
 io.on('connection', function (socket) {
-    socket.join(socket.handshake.query.userId);
-    socket.on('disconnect', ()=> {console.log('user disconected')});
+    let userId = socket.handshake.query.userId;
+    console.log('user connected');
+    socket.join(userId);
+    socket.on('disconnect', ()=> {console.log('user disconected')})
+        .on('acceptFriendRequest', (data)=>{
+            console.log('acceptFriend Emited');
+            socket.broadcast.to(data.room).emit('acceptedFriendRequest',data.contact);
+        }).on('sendFriendRequest', (data)=>{
+            console.log('sendFriend Emited');
+            socket.broadcast.to(data.room).emit('incomingFriendRequest', data.contact);
+        }).on('typing',(data)=>{
+            for(let i = 0; i < data.rooms.length; i++){
+                socket.broadcast.to(data.rooms[i]).emit('userIsTyping', data.info);
+            }
+        }).on('stopTyping',(data)=>{
+            for(let i = 0; i < data.rooms.length; i++){
+                socket.broadcast.to(data.rooms[i]).emit('userStopTyping', data.info);
+            }
+        }).on('sendMessage',(data)=>{
+            for(let i =0; i < data.rooms.length; i++){
+                socket.broadcast.to(data.rooms[i]).emit('message', {message: data.message, conversationId: data.conversation});
+            }
+        })
 });

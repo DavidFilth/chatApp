@@ -1,0 +1,6 @@
+li:hover{
+    cursor: pointer;
+}
+li img{
+    float: left;
+}

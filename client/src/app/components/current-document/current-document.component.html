@@ -1,8 +1,7 @@
 <div class="head">
     <img src="http://placehold.it/128x128" alt="none" class="avatar ">
-    <h3 class="inline"> {{ conversation.name }} </h3>
-    {{conversation.participants}}
+    <h3 class="inline"> {{ conversation.name || getPtoPName() }} </h3>
 </div>
 <div class="messages">
-    <div *ngFor="let message of conversation.messages" class="arrow_box pull-right"><strong> id </strong> : {{message}}  </div>
+    <div *ngFor="let message of conversation.messages" class="arrow_box" [ngClass]="setMessageClass(message)" ><strong> {{getName(message.from)}} </strong> : {{message.content}}  </div>
 </div>

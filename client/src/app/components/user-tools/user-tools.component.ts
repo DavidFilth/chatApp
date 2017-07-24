@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./user-tools.component.css']
 })
 export class UserToolsComponent {
-  @Input() selectedTool : {value: string};
+  @Input() selectedTool : customTypes.tool;
   @Input() user : customTypes.User;
   constructor(){
   }

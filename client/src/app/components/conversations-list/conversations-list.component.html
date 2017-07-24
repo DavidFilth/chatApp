@@ -1,6 +1,12 @@
 <h4>Recents</h4>
 <hr>
 <ul class="nav nav-sidebar">
-    <li *ngFor="let conv of conversations" (click)="conversationSelected.emit(conv)">
-        <a> <img src="http://placehold.it/128x128" alt="none" class="avatar "> {{ conv.name }} </a></li>
+    <li *ngFor="let conv of conversations" (click)="conversationSelected.emit(conv)" >
+        <a> 
+            <img src="http://placehold.it/128x128" alt="none" class="avatar "> 
+            <h4> {{ getTitle(conv) }} </h4>
+            <p> <strong>David</strong>: eres un pendejo </p>
+        </a>
+        <span *ngFor="let contact of conv.usersTyping"> {{contact.name}} is typing... </span>
+    </li>
 </ul>

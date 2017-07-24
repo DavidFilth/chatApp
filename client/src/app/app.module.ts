@@ -23,7 +23,8 @@ import { PendingRequestsComponent } from './components/pending-requests/pending-
 import { AuthenticationService } from './services/authentication.service';
 import { ConversationsListComponent } from './components/conversations-list/conversations-list.component'
 import { SocketService } from './services/socket.service';
-import { SendMessageComponent } from './components/send-message/send-message.component'
+import { SendMessageComponent } from './components/send-message/send-message.component';
+import { CreateGroupComponent } from './components/create-group/create-group.component'
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { SendMessageComponent } from './components/send-message/send-message.com
     MessagesComponent,
     PendingRequestsComponent,
     ConversationsListComponent,
-    SendMessageComponent
+    SendMessageComponent,
+    CreateGroupComponent
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy }, 

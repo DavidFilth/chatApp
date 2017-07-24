@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 
-import { UsersService } from './users.service'
+import { UsersService } from './users.service';
+import { SocketService } from './socket.service';
 
 @Injectable()
 export class AuthenticationService {
   private auth: boolean;
   private user: customTypes.User;
-  constructor(private userServ: UsersService) {
+  constructor(private userServ: UsersService, private socket: SocketService) {
     this.user = null;
     this.auth = false;
   }
@@ -15,13 +16,14 @@ export class AuthenticationService {
   }
   logout(){
     this.auth = false;
+    this.socket.disconnect();
   }
   authenticated() : boolean{
     return this.auth;
   }
   authenticate(user : customTypes.userSchema){
     this.user = {
-      id: user._id,
+      _id: user._id,
       name: user.name,
       username: user.username,
       email: user.email,
@@ -38,11 +40,11 @@ export class AuthenticationService {
     }
     // Adding the conversations
     for(let i = 0; i < user.conversations.length; i++){
-      this.userServ.searchConversation(user.conversations[i]).subscribe((res : customTypes.Conversation )=>{
+      this.userServ.searchConversation(user.conversations[i]).subscribe((res : customTypes.conversationSchema )=>{
+        res.usersTyping = [];
         this.user.conversations.push(res);
       })
     }
-
     // Adding the pending requests
     for(let i = 0; i < user.pendingRequests.length; i++){
       this.userServ.searchUser(user.pendingRequests[i]).subscribe((res : customTypes.contactInfo )=>{
