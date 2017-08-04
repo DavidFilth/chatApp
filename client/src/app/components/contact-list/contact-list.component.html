@@ -1,9 +1,23 @@
-<ul class="nav nav-sidebar">
+<h4> Contacts list </h4>
+<ul class="nav nav-pills flex-column">
     <li *ngFor="let contact of contacts" (click)='contactSelected.emit(contact)' >
-        <a>
-        <img src="http://placehold.it/128x128" alt="none" class="avatar"> 
-        <h4>{{ contact.name }} </h4>
-        <p> {{contact.email}} </p>
+        <a class="nav-link">
+            <div class="contact-img">
+                <img src="http://placehold.it/70x70" alt="none" class="avatar">
+            </div>
+            <div class="contact-data">
+                <i class="fa fa-circle" aria-hidden="true" *ngIf="contact.status"></i>
+                <i class="fa fa-circle-o" aria-hidden="true" *ngIf="!contact.status"></i>
+                <h5>
+                    {{ contact.name }}
+                </h5>
+                <p> {{contact.email}} </p>
+            </div>
         </a>
+    </li>
+    <li *ngIf="contacts.length < 1">
+        <div class="alert alert-info" role="alert">
+             Your list of contacts is empty.
+        </div>
     </li>
 </ul>

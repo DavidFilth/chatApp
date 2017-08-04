@@ -9,7 +9,6 @@ let userRoute = express.Router();
 userRoute.get('/search/contact/:id', function (req, res) {
   User.findById(req.params.id, function (err, data: any) {
     if (err) {
-      console.error(err);
       res.send(err);
     }
     if (!data) {
@@ -19,15 +18,15 @@ userRoute.get('/search/contact/:id', function (req, res) {
   });
 });
 userRoute.get('/search/conversation/:id', function (req, res) {
-  Conversation.findById(req.params.id, function (err, data: any) {
-    if (err) {
-      res.send(err);
-    } else if (!data) {
-      res.send(data);
-    } else {
-      res.send(data);
-    }
-  })
+  Conversation.findById(req.params.id)
+    .populate({ path: 'messages', select: '_id date from content type', populate: { path: 'from', select: '_id name username email' } })
+    .exec((err, data) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(data);
+      }
+    })
 });
 userRoute.get('/search/message/:id', function (req, res) {
   Message.findById(req.params.id, function (err, data) {
@@ -40,6 +39,24 @@ userRoute.get('/search/message/:id', function (req, res) {
     }
   });
 });
+userRoute.get('/search/lastMessage/:id', function(req, res){
+  Conversation.findById(req.params.id,(convError, data : any)=>{
+    if(convError) res.send(convError);
+    else if (!data) res.send(data);
+    else{
+      if(data.messages.length === 0) res.send({});
+      else{
+        let last = data.messages[data.messages.length - 1];
+        Message.findById(last)
+          .populate('from', '_id name username email')
+          .exec((messageError, message)=>{
+            if(messageError) res.send(messageError);
+            else res.send(message);
+          });
+      }
+    }
+  });
+})
 userRoute.post('/sendFriendshipRequest', function (req, res) {
   User.findOne({ email: req.body.contact }, function (err, contact: any) {
     if (err) {
@@ -58,15 +75,15 @@ userRoute.post('/sendFriendshipRequest', function (req, res) {
         }
         // check if there's a pending request of that contact
         if (user.pendingRequests.indexOf(contact._id) !== -1) {
-          res.send({ status: 3, contact: contactInfo});
+          res.send({ status: 3, contact: contactInfo });
         }
         //check if there's already  on the contacts list
         else if (contact.contacts.indexOf(req.body.userId) !== -1) {
-          res.send({ status: 1, contact: contactInfo});
+          res.send({ status: 1, contact: contactInfo });
         }
         //check if there's already a pending friend from you
         else if (contact.pendingRequests.indexOf(req.body.userId) !== -1) {
-          res.send({ status: 2, contact: contactInfo});
+          res.send({ status: 2, contact: contactInfo });
         }
         else {
           contact.pendingRequests.push(req.body.userId);
@@ -119,7 +136,7 @@ userRoute.post('/postMessage', function (req, res) {
         } else if (!conversation) {
           res.send(conversation);
         } else {
-          if (conversation.messages.length === 0 && conversation.type === 'ptop' ) {
+          if (conversation.messages.length === 0 && conversation.type === 'ptop') {
             for (let i = 0; i < conversation.participants.length; i++) {
               User.findById(conversation.participants[i], (err, user: any) => {
                 if (err) {
@@ -143,44 +160,51 @@ userRoute.post('/postMessage', function (req, res) {
 });
 userRoute.post('/createConversation', function (req, res) {
   if (req.body.type === 'ptop') {
-    Conversation.findOne({ type: req.body.type, participants: req.body.participants }, (err, data) => {
-      if (err) {
-        res.send(err);
-      } else if (!data) {
-        let newConv = new Conversation(req.body);
-        newConv.save((error, conv) => {
-          if (error) {
-            res.send(error);
-          } else {
-            res.send(conv);
-          }
-        })
-      } else {
-        res.send(data);
-      }
-    });
-  } else {
-    let newConv = new Conversation(req.body);
-    newConv.save((err, conv: any) => {
-      if (err) {
-        res.send(err);
-      } else if (!conv) {
-        res.send(conv);
-      } else {
-        for (let i = 0; i < conv.participants.length; i++) {
-          User.findById(conv.participants[i], (err, user: any) => {
-            if (err) {
-              res.send(err);
-            } else if (!user) {
-              res.send(user)
-            } else {
-              user.conversations.push(conv._id);
-              user.save();
-            }
+    console.log('participants: ', req.body.participants);
+    Conversation.findOne({ type: req.body.type, participants: {$all:req.body.participants.map(contact=>contact._id )}})
+      .populate('participants', '_id name username email')
+      .exec((err, data) => {
+        if (err) {
+          res.send(err);
+        } else if (!data) {
+          let newConv = new Conversation(req.body);
+          newConv.populate({ path: 'participants', select: '_id name username email' }, (popError) => {
+            newConv.save((saveError, conv) => {
+              if (saveError) {
+                res.send(saveError);
+              } else {
+                res.send(conv);
+              }
+            });
           });
+        } else {
+          res.send(data);
         }
-        res.send(conv);
-      }
+      });
+  } else {
+    let newConv = new Conversation(req.body)
+    newConv.populate({ path: 'participants', select: '_id name username email' }, (popError) => {
+      newConv.save((err, conv: any) => {
+        if (err) {
+          res.send(err);
+        } else if (!conv) {
+          res.send(conv);
+        } else {
+          for (let i = 0; i < conv.participants.length; i++) {
+            User.findById(conv.participants[i], (err, user: any) => {
+              if (err) {
+                res.send(err);
+              } else if (!user) {
+                res.send(user)
+              } else {
+                user.conversations.push(conv._id);
+                user.save();
+              }
+            });
+          }
+          res.send(conv);
+        }
+      });
     });
   }
 });

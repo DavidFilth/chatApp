@@ -1,40 +1,47 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild, OnInit } from '@angular/core';
 
-import { SocketService } from '../../services/socket.service'
+import { SocketService } from '../../services/socket.service';
+import { CommonFunctionalityService } from '../../services/common-functionality.service';
 
 @Component({
   selector: 'current-document',
   templateUrl: './current-document.component.html',
   styleUrls: ['./current-document.component.css']
 })
-export class CurrentDocumentComponent{
-  @Input() conversation : customTypes.Conversation;
+export class CurrentDocumentComponent implements OnInit{
+  @Input() conversation : customTypes.conversationInfo;
   @Input() userId : string;
-  constructor(private socket: SocketService) {
-    this.socket.getMessage()
-      .subscribe((data: any)=>{
-        console.log(data);
-        if(this.conversation._id === data.conversationId) this.conversation.messages.push(data.message);
-      });
-  }
-  getName(id : string){
-    if(this.conversation.participants[id] === undefined){
-      return '';
-    }
-    return this.conversation.participants[id]['name'];
-  }
-  getPtoPName(){
-    if(this.conversation.participants[this.userId] === undefined){
-      return '';
-    }
-    for(let key in this.conversation.participants){
-      if(key !== this.userId){
-        return this.conversation.participants[key]['name'];
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+  private switch : boolean = false;
+  constructor(private commonFn: CommonFunctionalityService, private socket: SocketService ) {
+    this.socket.getMessage().subscribe((data)=>{
+      if(data.conversationId === this.conversation._id){
+        this.conversation.messages.push(data.message);
+        setTimeout(()=>{
+          this.scrollToBottom();
+        },1); 
       }
-    }
-    return '';
+    });
+  }
+  getTitle(){
+    if(this.conversation.name) return this.conversation.name;
+    return this.commonFn.contactFromPtoP(this.conversation, this.userId).name;
   }
   setMessageClass(message: customTypes.Message){
-    return message.from === this.userId ? 'pull-right arrow_box_right': 'pull-left arrow_box_left';
+    return message.from._id === this.userId ? 'pull-right arrow_box_right': 'pull-left arrow_box_left';
+  }
+  ngOnInit(){
+    this.scrollToBottom();
+  }
+  scrollToBottom(): void {
+        try {
+            this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+        } catch(err) { }                 
+  }
+  checkStatus(){
+    if(this.conversation.type === "ptop"){
+      return this.commonFn.contactFromPtoP(this.conversation, this.userId).status; 
+    }
+    return false;
   }
 }

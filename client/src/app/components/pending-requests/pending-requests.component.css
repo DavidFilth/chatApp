@@ -1,6 +1,7 @@
 button{
     display: inline-block;
-    margin-left: 5px;
-    margin-top: 20px;
-    vertical-align: middle;
+}
+p{
+    margin-bottom: 5px;
+    margin-top: 5px;
 }

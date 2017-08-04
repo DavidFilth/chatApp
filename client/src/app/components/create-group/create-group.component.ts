@@ -11,21 +11,22 @@ export class CreateGroupComponent implements OnInit {
   private contacts : customTypes.contactInfo[];
   private participants : customTypes.contactInfo[];
   constructor() {}
-  addParticipant(contact : customTypes.contactInfo){
-    this.participants.push(contact);
-    let index = this.contacts.indexOf(contact);
-    if(index !== -1) this.contacts.splice(index, 1);
-  }
   ngOnInit(){
+    this.participants = [];
     this.contacts = this.user.contacts.slice();
-    this.participants=[];
-  }
-  removeParticipant(contact : customTypes.contactInfo){
-    this.contacts.push(contact);
-    let index = this.participants.indexOf(contact);
-    if(index !== -1) this.participants.splice(index, 1);
   }
   submit(form){
-    this.createGroup.emit({name: form.groupName, participants: this.participants});
+    if(this.participants.length > 0){
+      this.createGroup.emit({name: form.groupName, participants: this.participants});
+    }
+  }
+  changeDetected(value: boolean, contact : customTypes.contactInfo){
+    if(value){
+      this.participants.push(contact);
+    } else{
+      let index = this.participants.indexOf(contact);
+      if(index > -1) this.participants.splice(index, 1);
+    }
+    console.log(this.participants);
   }
 }

@@ -6,10 +6,11 @@ let userSchema = new Schema({
     name: String,
     username: String,
     email: String,
-    contacts: Array,
-    conversations: Array,
+    contacts: [ {type: Schema.Types.ObjectId, ref: 'User'}],
+    conversations: [{type: Schema.Types.ObjectId, ref: 'Conversation'}],
     password: String,
-    pendingRequests: Array
+    pendingRequests: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    lastConnection: Number
 });
 let User = mongoose.model('User', userSchema);
 export {User} 

@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router'
 
 import { UsersService } from './users.service';
 import { SocketService } from './socket.service';
+
 
 @Injectable()
 export class AuthenticationService {
   private auth: boolean;
   private user: customTypes.User;
-  constructor(private userServ: UsersService, private socket: SocketService) {
+  constructor(private userServ: UsersService, private socket: SocketService, private router: Router) {
     this.user = null;
     this.auth = false;
   }
@@ -17,39 +19,35 @@ export class AuthenticationService {
   logout(){
     this.auth = false;
     this.socket.disconnect();
+    this.router.navigateByUrl('/login');
   }
   authenticated() : boolean{
     return this.auth;
   }
-  authenticate(user : customTypes.userSchema){
-    this.user = {
-      _id: user._id,
-      name: user.name,
-      username: user.username,
-      email: user.email,
-      password: user.password,
-      contacts: [],
-      conversations: [],
-      pendingRequests: []
+  authenticate(user : customTypes.User){
+    this.user = user;
+    this.user.getUserInfo = ()=>{
+      return {
+        _id: this.user._id,
+        name: this.user.name,
+        username: this.user.username,
+        email: this.user.email
+      }
     }
-    // Adding the contacts;
-    for(let i = 0; i < user.contacts.length; i++){
-      this.userServ.searchUser(user.contacts[i]).subscribe((res : customTypes.contactInfo)=>{
-        this.user.contacts.push(res);
-      });
+    this.user.countUnreadMessages = () =>{
+      let res = 0;
+      for(let i = 0; i < this.user.conversations.length; i++){
+        res+=this.user.conversations[i].unreadMessages;
+      }
+      return res;
     }
-    // Adding the conversations
-    for(let i = 0; i < user.conversations.length; i++){
-      this.userServ.searchConversation(user.conversations[i]).subscribe((res : customTypes.conversationSchema )=>{
-        res.usersTyping = [];
-        this.user.conversations.push(res);
-      })
-    }
-    // Adding the pending requests
-    for(let i = 0; i < user.pendingRequests.length; i++){
-      this.userServ.searchUser(user.pendingRequests[i]).subscribe((res : customTypes.contactInfo )=>{
-        this.user.pendingRequests.push(res);
-      })
+    for(let i = 0 ; i < this.user.conversations.length; i++){
+      this.userServ.getLastMessage(this.user.conversations[i]._id)
+        .subscribe((data: customTypes.Message)=>{
+          this.user.conversations[i].lastMessage = data;
+        });
+      this.user.conversations[i].unreadMessages = 0;
+      this.user.conversations[i].usersTyping = [];
     }
     this.auth = true;
   }

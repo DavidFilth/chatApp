@@ -1,10 +1,26 @@
-<h4>Friend Requests</h4>
-<hr>
-<ul class="nav nav-sidebar">
-    <li *ngFor="let req of user.pendingRequests">
-        <img src="http://placehold.it/128x128" alt="none" class="avatar ">
-          {{ req.name }}
-          <button type="button" class="btn btn-danger btn-xs pull-right" (click)="resolveFriendRequest(req, false)" > Decline</button>
-          <button type="button" class="btn btn-success btn-xs pull-right" (click)="resolveFriendRequest(req, true)"> Accept</button>
+<h4>Pending Requests</h4>
+<ul class="nav nav-pills flex-column">
+    <li class="nav-item" *ngFor="let req of user.pendingRequests">
+        <a class="nav-link">
+            <div class="contact-img">
+                <img src="http://placehold.it/128x128" alt="none" class="avatar">
+            </div>
+            <div class="contact-data">
+                <p> {{ req.name }} </p>
+                <div>
+                    <button type="button" class="btn btn-success" (click)="resolveFriendRequest(req, true)">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger" (click)="resolveFriendRequest(req, false)">
+                        <i class="fa fa-user-times" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </a>
+    </li>
+    <li *ngIf="user.pendingRequests.length < 1">
+        <div class="alert alert-info" role="alert">
+             You have no pending friend requests
+        </div>
     </li>
 </ul>

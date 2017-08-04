@@ -17,6 +17,7 @@ import { CurrentDocumentComponent } from './components/current-document/current-
 import { UserToolsComponent } from './components/user-tools/user-tools.component';
 import { AddContactComponent } from './components/add-contact/add-contact.component';
 import { ValidatorsService } from './services/validators.service'
+import {CommonFunctionalityService} from './services/common-functionality.service'
 import { MessagesService } from './services/messages.service';
 import { MessagesComponent } from './components/messages/messages.component';
 import { PendingRequestsComponent } from './components/pending-requests/pending-requests.component'
@@ -24,7 +25,8 @@ import { AuthenticationService } from './services/authentication.service';
 import { ConversationsListComponent } from './components/conversations-list/conversations-list.component'
 import { SocketService } from './services/socket.service';
 import { SendMessageComponent } from './components/send-message/send-message.component';
-import { CreateGroupComponent } from './components/create-group/create-group.component'
+import { CreateGroupComponent } from './components/create-group/create-group.component';
+import { CustomPipe } from './pipes/custom.pipe'
 
 @NgModule({
   imports: [
@@ -48,7 +50,8 @@ import { CreateGroupComponent } from './components/create-group/create-group.com
     PendingRequestsComponent,
     ConversationsListComponent,
     SendMessageComponent,
-    CreateGroupComponent
+    CreateGroupComponent,
+    CustomPipe
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy }, 
@@ -57,7 +60,8 @@ import { CreateGroupComponent } from './components/create-group/create-group.com
     ValidatorsService,
     MessagesService,
     AuthenticationService,
-    SocketService
+    SocketService,
+    CommonFunctionalityService
   ],
   bootstrap: [AppComponent]
 })

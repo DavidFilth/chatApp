@@ -25,8 +25,8 @@ export class UsersService {
       return data.json() ;
     });
   }
-  searchConversation( conversation : string ){
-    return this.http.get('api/user/search/conversation/' + conversation).map(function(data){
+  searchConversation( conversationId : string ){
+    return this.http.get('api/user/search/conversation/' + conversationId).map(function(data){
       return data.json() ;
     });
   }
@@ -59,10 +59,14 @@ export class UsersService {
         return res.json();
       });
   }
-  createConversation(data){
+  createConversation(data: customTypes.conversationInfo){
     let headers = new Headers();
     headers.append('Content-type', 'application/json');
     return this.http.post('api/user/createConversation', JSON.stringify(data), {headers: headers})
       .map(res => res.json());
   }
+    getLastMessage(conversationId : string){
+      return this.http.get('api/user/search/lastMessage/' + conversationId)
+        .map(res => res.json());
+    }
 }

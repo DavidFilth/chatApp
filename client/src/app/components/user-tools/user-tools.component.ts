@@ -11,5 +11,5 @@ export class UserToolsComponent {
   constructor(){
   }
   changeTool(value : string){this.selectedTool.value = value}
-
+  checkTool(value : string){return this.selectedTool.value === value ? 'selected' : ''}
 }

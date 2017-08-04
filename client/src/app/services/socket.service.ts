@@ -7,6 +7,7 @@ import * as io from 'socket.io-client';
 @Injectable()
 export class SocketService {
   private socket: SocketIOClient.Socket;
+  private observables: {[key : string]: Observable<any> } = {};
   constructor() {
   }
   connect(user){
@@ -21,68 +22,56 @@ export class SocketService {
   sendFriendRequest(contactId: string, user: customTypes.contactInfo){
     this.socket.emit('sendFriendRequest', {room: contactId, contact: user});
   }
-  UserIsTyping(participants: string[], conversation: string, contact: customTypes.contactInfo){
-    this.socket.emit('typing',{rooms: participants, info:{conversation, contact}});
+  UserIsTyping(rooms: string[], conversation: string, contact: customTypes.contactInfo){
+    this.socket.emit('typing',{rooms, conversation, contact});
   }
-  UserStopTyping(participants: string[], conversation: string, contact: customTypes.contactInfo){
-    this.socket.emit('stopTyping', {rooms: participants, info:{conversation, contact}});
+  UserStopTyping(rooms: string[], conversation: string, contact: customTypes.contactInfo){
+    this.socket.emit('stopTyping', {rooms, conversation, contact});
+  }
+  newConversation(conversation: customTypes.conversationInfo, rooms: string[]){
+    this.socket.emit('newConversation', {conversation, rooms});
+  }
+  incomingConversation(){
+    this.observables['incomingConversation'] = this.observables['incomingConversation'] ||
+    this.createObservableForSocket('incomingConversation');
+    return this.observables['incomingConversation'];
   }
   incomingFriendRequest(){
-    let observable : Observable<any> = new Observable(observer =>{
-      this.socket.on('incomingFriendRequest',(data)=>{
-        observer.next(data);
-      });
-      return ()=>{
-        this.socket.disconnect();
-      }
-    });
-    return observable;
+   this.observables['incomingFriendRequest'] = this.observables['incomingFriendRequest'] || 
+   this.createObservableForSocket('incomingFriendRequest');
+    return this.observables['incomingFriendRequest'];
   }
   incomingUserTyping(){
-    let observable : Observable<any> = new Observable(observer =>{
-      this.socket.on('userIsTyping',(data)=>{
-        observer.next(data);
-      });
-      return ()=>{
-        this.socket.disconnect();
-      }
-    });
-    return observable;
+    this.observables['userIsTyping'] = this.observables['userIsTyping'] || 
+    this.createObservableForSocket('userIsTyping');
+    return this.observables['userIsTyping'];
   }
   incomingUserStopTyping(){
-    let observable : Observable<any> = new Observable(observer =>{
-      this.socket.on('userStopTyping',(data)=>{
-        observer.next(data);
-      });
-      return ()=>{
-        this.socket.disconnect();
-      }
-    });
-    return observable;
+    this.observables['userStopTyping'] = this.observables['userStopTyping'] || 
+    this.createObservableForSocket('userStopTyping');
+    return this.observables['userStopTyping'];
   }
   getMessage(){
-    let observable : Observable<any> = new Observable(observer =>{
-      this.socket.on('message', (data) => {
-        observer.next(data);
-      });
-      return () => {
-        this.socket.disconnect();
-      };
-    });
-    return observable;
+    this.observables['message'] = this.observables['message'] ||
+    this.createObservableForSocket('message');
+    return this.observables['message'];
   }
   getAcceptedFriendRequests(){
-    let observable : Observable<any> = new Observable(observer =>{
-      this.socket.on('acceptedFriendRequest',(data : customTypes.contactInfo)=>{
-        observer.next(data);
-      });
-      return () => {
-        this.socket.disconnect();
-      };
-    });
-    return observable;
+    this.observables['acceptedFriendRequest'] = this.observables['acceptedFriendRequest'] || 
+    this.createObservableForSocket('acceptedFriendRequest');
+    return this.observables['acceptedFriendRequest'];
   }
   disconnect(){
     this.socket.disconnect();
+  }
+  private createObservableForSocket(event : string) : Observable<any>{
+    return new Observable(observer =>{
+      this.socket.on(event, data =>{
+        observer.next(data);
+      });
+      return ()=>{
+        this.socket.disconnect();
+      }
+    });
   }
 }

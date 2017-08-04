@@ -1,12 +1,25 @@
 <h4>Recents</h4>
-<hr>
-<ul class="nav nav-sidebar">
-    <li *ngFor="let conv of conversations" (click)="conversationSelected.emit(conv)" >
-        <a> 
-            <img src="http://placehold.it/128x128" alt="none" class="avatar "> 
-            <h4> {{ getTitle(conv) }} </h4>
-            <p> <strong>David</strong>: eres un pendejo </p>
+<ul class="nav nav-pills flex-column">
+    <li class="nav-item" *ngFor="let conv of conversations" (click)="conversationSelected.emit(conv)" >
+        <a class="nav-link">
+            <div class="contact-img">
+                <img src="http://placehold.it/70x70" alt="none" class="avatar">
+            </div>
+            <div class="contact-data">
+                <h5> {{ getTitle(conv) }}  <span class="badge badge-pill badge-danger" *ngIf="conv.unreadMessages > 0" > {{ conv.unreadMessages }}</span> </h5>
+                <div *ngIf="conv.lastMessage">
+                    <p class="lastMessage mb-0"> <strong>{{conv.lastMessage.from.name }}: </strong> {{conv.lastMessage.content}}</p>
+                    <p class="dateMessage mb-0"> {{conv.lastMessage.date | date:'short'}}</p>
+                    <p *ngIf="conv.usersTyping">
+                        <span *ngFor="let contact of conv.usersTyping"> {{contact.name}} <i class="fa fa-commenting-o" aria-hidden="true"></i> </span>
+                    </p>
+                </div>
+            </div>
         </a>
-        <span *ngFor="let contact of conv.usersTyping"> {{contact.name}} is typing... </span>
+    </li>
+    <li *ngIf="conversations.length < 1">
+        <div class="alert alert-info" role="alert">
+             You have no recent conversations
+        </div>
     </li>
 </ul>

@@ -1,21 +1,23 @@
-<img src="http://placehold.it/50x50" class="avatar img-circle"> {{ user.name }}
-<div class="contenedor">
-  <div class="dropdown">
-    <button type="button" class="dropdown-toggle">
-      <span class="glyphicon glyphicon-user" aria-hidden="true" (click)="changeTool('pending-requests')"></span>
-    </button>
-    <span class="badge badge-notify" *ngIf="user.pendingRequests.length > 0" > {{ user.pendingRequests.length }}</span>
-  </div>
-  <div class="dropdown">
-    <button class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <span class="glyphicon glyphicon-option-vertical"></span>
-    </button>
-    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-      <li><a (click)="changeTool('conversation-list')">My conversations</a></li>
-      <li><a (click)="changeTool('add-contact')">Add Friend</a></li>
-      <li><a (click)="changeTool('contact-list')"> My Contacts</a></li>
-      <li><a (click)="changeTool('create-group')">New Group</a></li>
-      <li><a (click)="changeTool('conversation-list')">Settings</a></li>
-    </ul>
-  </div>
+<div class="contenedor ">
+  <a (click)="changeTool('add-contact')">
+    <i class="fa fa-user-plus" aria-hidden="true" [ngClass]="checkTool('add-contact')"></i>
+    <span class="badge badge-pill badge-danger" *ngIf="user.pendingRequests.length > 0" > {{ user.pendingRequests.length }}</span>
+  </a>  
+  <a (click)="changeTool('conversation-list')">
+    <i class="fa fa-comments" aria-hidden="true" [ngClass]="checkTool('conversation-list')"></i>
+    <span class="badge badge-pill badge-danger" *ngIf="user.countUnreadMessages() > 0" >{{user.countUnreadMessages()}}</span>
+  </a>
+  <a (click)="changeTool('contact-list')">
+    <i class="fa fa-address-book" aria-hidden="true" [ngClass]="checkTool('contact-list')"></i>
+  </a>
+  <a (click)="changeTool('create-group')">
+    <i class="fa fa-users" aria-hidden="true" [ngClass]="checkTool('create-group')"></i>
+  </a>
+  <a (click)="changeTool('settings')" >
+    <i class="fa fa-gear" aria-hidden="true" [ngClass]="checkTool('settings')"></i>
+  </a>
 </div>
+<div class="mt-3">
+  <img src="http://placehold.it/50x50" class="avatar mr-3"> {{ user.name}}
+</div>
+

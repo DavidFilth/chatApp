@@ -1,23 +1,23 @@
-<h4 class="form-signin-heading">
-  Create new Group</h4>
-<form class="form-horizontal" #f="ngForm" (ngSubmit)="createGroup.emit({'name': f.value.groupName, 'participants': participants })">
-  <div class="form-group">
-    <div class="col-sm-9">
-      <input name="groupName" type="text" class="form-control" placeholder="Group name" ngModel required>
+<h4>Create a new group</h4>
+<form #f="ngForm" (ngSubmit)="createGroup.emit({'name': f.value.groupName, 'participants': participants })">
+  <div class="form-group row">
+    <div class="col-9">
+      <input name="groupName" type="text" class="form-control" placeholder="Type a name for the group" ngModel required>
     </div>
-    <div class="col-sm-3">
-      <button class="btn btn-primary btn-success" type="submit" [disabled]="!f.valid || participants.length === 0">
-        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+    <div class="col-3">
+      <button class="btn btn-success mr-2" type="submit" [disabled]="!f.valid || participants.length < 1">
+        <i class="fa fa-check" aria-hidden="true"></i>
       </button>
     </div>
   </div>
 </form>
-<div class="maxHeight">
-  <h4>Participants</h4>
-  <hr>
-  <contact-list [contacts]="participants" (contactSelected)="removeParticipant($event)"></contact-list>
-</div>
-<div>
-  <h4>Contacts</h4>
-  <contact-list [contacts]="contacts" (contactSelected)="addParticipant($event)"></contact-list>
+<div class="form-group">
+  <h5> Select the participants </h5>
+  <div *ngFor="let contact of contacts">
+    <label class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" (change)="changeDetected($event.target.checked, contact)">
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">{{ contact.name}} ({{ contact.email }}) </span>
+      </label>
+  </div>
 </div>

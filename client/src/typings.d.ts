@@ -5,79 +5,55 @@ interface NodeModule {
 }
 declare namespace customTypes {
     export interface User {
-        _id: string,
-        name: string,
-        username: string
-        email: string,
-        password: string,
-        contacts: contactInfo[],
-        conversations: conversationSchema[]
-        pendingRequests: contactInfo[]
+        _id: string;
+        name: string;
+        username: string;
+        email: string;
+        password: string;
+        contacts: contactInfo[];
+        conversations: conversationInfo[];
+        pendingRequests: contactInfo[];
+        getUserInfo() : contactInfo;
+        countUnreadMessages() : number;
     }
 
     export interface contactInfo{
-        _id: string,
-        name: string,
-        email: string,
-        username: string
+        _id: string;
+        name: string;
+        email: string;
+        username: string;
+        status?: boolean;
     }
     export interface conversationInfo{
-        _id: string,
-        name : string,
-        type: string,
-        participants: contactInfo[],
-        lastMessage: Message
-    }
-    export interface userSchema{
-      _id : string,
-      name: string,
-      username: string,
-      email: string,
-      password: string
-      contacts: string[],
-      conversations: string[],
-      pendingRequests: string[]
-    }
-    export interface Conversation{
-        _id: string,
-        name: string,
-        participants: {
-            [key : string] : {
-                name: string,
-                email: string
-            }
-        },
-        messages: Message[],
-        type: string
-    }
-    export interface conversationSchema{
-        _id: string,
-        name?: string,
-        participants: string[],
-        messages: string[],
-        type: string,
-        usersTyping?: contactInfo[]
+        _id: string;
+        name : string;
+        type: string;
+        participants: contactInfo[];
+        usersTyping?: contactInfo[];
+        messages?: Message[];
+        lastMessage?: Message;
+        unreadMessages: number;
     }
     export interface Message{
-        _id: string,
-        date: number,
-        from: string,
-        content: string,
-        type: string
+        _id: string;
+        date: number;
+        from: contactInfo;
+        content: string;
+        type: string;
     }
     export interface tool{
-        value: string
+        value: string;
     }
     export interface messageForm{
-        message: string,
-        file?: any,
+        message: string;
+        file?: any;
     }
     export interface groupForm{
-        name: string,
-        participants: contactInfo[]
+        name: string;
+        participants: contactInfo[];
     }
     export interface friendRequest{
-        status: number,
-        contact: contactInfo
+        status: number;
+        contact: contactInfo;
     }
 }

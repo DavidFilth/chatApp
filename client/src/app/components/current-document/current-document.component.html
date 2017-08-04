@@ -1,7 +1,31 @@
 <div class="head">
-    <img src="http://placehold.it/128x128" alt="none" class="avatar ">
-    <h3 class="inline"> {{ conversation.name || getPtoPName() }} </h3>
+    <div class="conversation-img">
+        <img src="http://placehold.it/70x70" alt="none" class="avatar">
+    </div>
+    <div class="conversation-data">
+        <h5> {{ getTitle() }} </h5>
+        <p *ngIf="conversation.type === 'ptop' && checkStatus()">Online</p>
+        <p *ngIf="conversation.type === 'group'">
+            <span *ngFor="let contact of conversation.participants">
+                {{ contact.name }} ({{contact.email}}),
+            </span>
+        </p>
+        <div class="icons">
+            <div class="dropdown">
+                <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item">Clear conversation</a>
+                    <a class="dropdown-item">Delete contact</a>
+                    <a class="dropdown-item">Leave group</a>
+                    <a class="dropdown-item">Edit Participants</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="messages">
-    <div *ngFor="let message of conversation.messages" class="arrow_box" [ngClass]="setMessageClass(message)" ><strong> {{getName(message.from)}} </strong> : {{message.content}}  </div>
+<div class="messages" #scrollMe>
+    <div *ngFor="let message of conversation.messages" class="arrow_box" [ngClass]="setMessageClass(message)"><strong> {{ message.from.name }} </strong> : {{message.content}} </div>
 </div>

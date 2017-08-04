@@ -69,15 +69,18 @@ io.on('connection', function (socket) {
             socket.broadcast.to(data.room).emit('incomingFriendRequest', data.contact);
         }).on('typing',(data)=>{
             for(let i = 0; i < data.rooms.length; i++){
-                socket.broadcast.to(data.rooms[i]).emit('userIsTyping', data.info);
+                socket.broadcast.to(data.rooms[i]).emit('userIsTyping', {conversation: data.conversation, contact: data.contact});
             }
         }).on('stopTyping',(data)=>{
             for(let i = 0; i < data.rooms.length; i++){
-                socket.broadcast.to(data.rooms[i]).emit('userStopTyping', data.info);
+                socket.broadcast.to(data.rooms[i]).emit('userStopTyping', {conversation: data.conversation, contact: data.contact});
             }
         }).on('sendMessage',(data)=>{
             for(let i =0; i < data.rooms.length; i++){
                 socket.broadcast.to(data.rooms[i]).emit('message', {message: data.message, conversationId: data.conversation});
             }
-        })
+        }).on('newConversation', (data)=>{
+            for(let i = 0; i < data.rooms.length; i++)
+            socket.broadcast.to(data.rooms[i]).emit('incomingConversation', data.conversation);
+        });
 });

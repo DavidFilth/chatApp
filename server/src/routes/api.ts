@@ -25,7 +25,11 @@ passport.use(new LocalStrategy({
   passwordField: 'password'
 },
   function (email, password, done) {
-    User.findOne({ email: email }, function (err, user: any) {
+    User.findOne({ email: email })
+      .populate('contacts',' _id name username email')
+      .populate({path: 'conversations', select: '_id name participants type', populate:{path:'participants', select:'_id name username email'}})
+      .populate('pendingRequests', '_id name username email')
+      .exec(function (err, user: any) {
       if (err) { return done(err); }
       if (!user) {
         return done(null, false);
@@ -34,7 +38,7 @@ passport.use(new LocalStrategy({
         return done(null, false);
       }
       return done(null, user);
-    });
+    })
   }
 ));
 

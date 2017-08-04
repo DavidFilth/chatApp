@@ -1,21 +1,20 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-4 col-md-3 sidebar">
+    <div class="col-sm-4 col-md-3 hidden-xs-down bg-faded sidebar">
       <user-tools [selectedTool]="tool" [user]='myUser'></user-tools>
       <hr>
       <messages></messages>
       <div [ngSwitch]='tool.value'>
         <create-group *ngSwitchCase="'create-group'" [user]="myUser" (createGroup)="createGroupHandler($event)" ></create-group>
-        <pending-requests *ngSwitchCase="'pending-requests'" [user]="myUser" ></pending-requests>
         <conversations-list *ngSwitchCase="'conversation-list'" [conversations]="myUser.conversations" (conversationSelected)="changeConversation($event)" [user]="myUser"></conversations-list>
         <contact-list *ngSwitchCase="'contact-list'" [contacts]="myUser.contacts" (contactSelected)="privateConversation($event)" ></contact-list>
         <add-contact *ngSwitchCase="'add-contact'" [user]="myUser" ></add-contact>
       </div>
     </div>
-    <div class="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
+    <div class="col-sm-8 offset-sm-4 col-md-9 offset-md-3 main">
       <div *ngIf='conversation'>
         <current-document [conversation]="conversation" [userId]="myUser._id"></current-document>
-        <send-message (send)="sendMessageHandler($event)" (typing)="typingHandler()" (stopTyping)="stopTypingHandler()"></send-message>
+        <send-message (send)="sendMessageHandler($event)" (typing)="typingHandler()" (stopTyping)="stopTypingHandler()" (focus)="onFocus()"></send-message>
       </div>
     </div>
   </div>

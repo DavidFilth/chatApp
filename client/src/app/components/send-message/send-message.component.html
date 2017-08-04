@@ -1,15 +1,17 @@
 <div class="messagebar">
   <form #f="ngForm" (ngSubmit)="send.emit(f.value); f.reset(); stopTyping.emit();" >
     <div class="row">
-      <div class="col-xs-9">
-        <input type="text" name="message" class="form-control" placeholder="Write your message..." required ngModel autocomplete="off" (input)="typing.emit()" (blur)='stopTyping.emit()'>
+      <div class="col-10">
+        <input type="text" name="message" class="form-control" placeholder="Write your message..." required ngModel 
+          autocomplete="off" (input)="typing.emit()" (blur)='stopTyping.emit()' (focus)="focus.emit()">
       </div>
-      <div class="col-xs-3">
-        <label class="btn btn-default btn-file">
-          <span class="glyphicon glyphicon-picture" aria-hidden="true"></span> <input type="file" name="file" style="display: none;" ngModel>
+      <div class="col-2">
+        <label class="btn btn-outline-primary">
+            <i class="fa fa-picture-o" aria-hidden="true"></i>
+            <input type="file" name="file" style="display: none;" ngModel>
         </label>
-        <button type="submit" class="btn btn-default btn-file" [disabled]="!f.valid" >
-          <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+        <button type="submit" class="btn btn-outline-primary mb-2" [disabled]="!f.valid" >
+          <i class="fa fa-paper-plane" aria-hidden="true"></i>
         </button>
       </div>
     </div>

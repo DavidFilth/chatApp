@@ -28,7 +28,7 @@ export class PendingRequestsComponent{
           this.messageServ.emit({content: `You have rejected the friendship request of ${ contact.name }`, type: "alert-warning" });
         }
         let index = this.user.pendingRequests.indexOf(contact);
-        if(index != -1) this.user.pendingRequests.splice(index);
+        if(index != -1) this.user.pendingRequests.splice(index,1);
     });
   }
 

@@ -9,6 +9,6 @@ export class SendMessageComponent {
   @Output() send = new EventEmitter();
   @Output() typing = new EventEmitter();
   @Output() stopTyping = new EventEmitter();
+  @Output() focus = new EventEmitter();
   constructor() { }
-  
 }

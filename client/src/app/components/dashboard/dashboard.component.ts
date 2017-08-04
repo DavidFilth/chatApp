@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
+import { CurrentDocumentComponent } from '../current-document/current-document.component';
 import { AuthenticationService } from '../../services/authentication.service';
 import { UsersService } from '../../services/users.service';
 import { SocketService } from '../../services/socket.service';
+import { MessagesService } from '../../services/messages.service';
+import { CommonFunctionalityService } from '../../services/common-functionality.service';
+
 
 @Component({
   selector: 'dashboard',
@@ -10,116 +14,97 @@ import { SocketService } from '../../services/socket.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent{
+  @ViewChild(CurrentDocumentComponent) private document : CurrentDocumentComponent;
   private tool: customTypes.tool;
   private myUser : customTypes.User;
-  private conversation : customTypes.Conversation;
-  constructor(private auth: AuthenticationService, private userServ : UsersService, private socket: SocketService){
+  private conversation : customTypes.conversationInfo;
+  constructor(private auth: AuthenticationService, 
+    private userServ : UsersService,
+    private socket: SocketService, 
+    private commonFn: CommonFunctionalityService,
+    private messages: MessagesService){
     this.myUser = this.auth.getUser();
     this.tool = {value: 'conversation-list'};
     this.socket.connect(this.myUser._id);
+    this.socket.incomingConversation()
+      .subscribe((data: customTypes.conversationInfo)=>{
+      if(data.type === 'group'){
+        this.messages.emit({content: `You have been added to ${data.name}`, type: 'alert-info'});
+      } 
+      this.myUser.conversations.push(data);
+    });
     this.socket.getMessage()
       .subscribe(data =>{
-        console.log('inside getmessage: ', data);
-      });
+      for(let i = 0; i < this.myUser.conversations.length; i++){
+        if(this.myUser.conversations[i]._id === data.conversationId){
+          this.myUser.conversations[i].unreadMessages++;
+          this.myUser.conversations[i].lastMessage = data.message;
+        }
+      }
+    });
     this.socket.getAcceptedFriendRequests()
       .subscribe((data: customTypes.contactInfo)=>{
         this.myUser.contacts.push(data);
+        this.messages.emit({content: `${data.name} has accepted your friendRequest`, type:'alert-info'});
       });
     this.socket.incomingFriendRequest()
       .subscribe((data : customTypes.contactInfo)=>{
         this.myUser.pendingRequests.push(data);
+        this.messages.emit({content: `You have a new friendship request from ${data.name}`, type: 'alert-info' });
       });
   }
-  changeConversation(conversation : customTypes.conversationSchema){
-    this.conversation = {
-      _id: conversation._id,
-      participants: {},
-      messages: [],
-      type: conversation.type,
-      name: conversation.name
-    };
-    for(let i = 0; i < conversation.messages.length; i++){
-      this.userServ.searchMessage(conversation.messages[i])
-        .subscribe((data : customTypes.Message)=>{
-          this.conversation.messages.push(data);
-        });
-    }
-    for(let i = 0; i < conversation.participants.length; i++){
-      this.userServ.searchUser(conversation.participants[i])
-        .subscribe((data : customTypes.contactInfo)=>{
-          this.conversation.participants[data._id] = {name: data.name, email: data.email};
-        });
-    }
+  changeConversation(conversation : customTypes.conversationInfo){
+    this.conversation = conversation;
+    conversation.unreadMessages = 0;
+    this.userServ.searchConversation(conversation._id)
+      .subscribe((data: customTypes.conversationInfo )=>{
+        this.conversation.messages = data.messages;
+        setTimeout(()=>this.document.scrollToBottom(),1);
+      });
   }
   sendMessageHandler(form: customTypes.messageForm){
-    let message: customTypes.Message = {
-      _id: undefined,
-      date: (new Date()).getTime(),
-      from: this.myUser._id,
-      content: form.message,
-      type: 'text'
-    }
+    let message = this.commonFn.newMessageObject(new Date(), this.myUser.getUserInfo(), form.message, 'text');
     if(this.conversation.messages.length === 0 && this.conversation.type === 'ptop'){
-      this.myUser.conversations.push({
-        _id: this.conversation._id,
-        participants: Object.keys(this.conversation.participants),
-        messages: [],
-        type: 'ptop',
-        usersTyping: []  
-      });
+      this.myUser.conversations.push(this.conversation);
+      this.socket.newConversation(this.conversation, [this.commonFn.contactFromPtoP(this.conversation, this.myUser._id)._id]);
     }
     this.conversation.messages.push(message);
+    setTimeout(()=>this.document.scrollToBottom(),1);
     this.userServ.postMessage({message, conversationId: this.conversation._id}).subscribe((data : customTypes.Message)=>{
-      let index = this.myUser.conversations.findIndex(conv=>conv._id === this.conversation._id);
-      if(index != -1) this.myUser.conversations[index].messages.push(data._id);
+      this.conversation.lastMessage = message;
     });
-    this.socket.sendMessage(Object.keys(this.conversation.participants), message, this.conversation._id);
+    this.socket.sendMessage(this.conversation.participants.map(contact => contact._id), message, this.conversation._id);
   }
   createGroupHandler(data: customTypes.groupForm){
-    let conv : customTypes.conversationSchema = {
-      _id: undefined,
-      name: data.name,
-      type: 'group',
-      participants: data.participants.map((data)=>data._id),
-      messages: []
-    }
-    conv.participants.push(this.myUser._id);
+    let conv = this.commonFn.newConversationObject(data.name, 'group', [...data.participants, this.myUser.getUserInfo()]);
     this.userServ.createConversation(conv)
-      .subscribe((res : customTypes.conversationSchema)=>{
-        res.usersTyping = [];
-        this.myUser.conversations.push(res);
+      .subscribe((res : customTypes.conversationInfo)=>{
+        conv._id = res._id;
+        this.myUser.conversations.push(conv);
+        this.socket.newConversation(conv, data.participants.map(contact => contact._id));
       });
       this.tool.value = 'conversation-list';
   }
   privateConversation(contact: customTypes.contactInfo){
     // Search for the chat in the conversations of the user
-    let index = this.myUser.conversations.findIndex((chat)=>chat.type === 'ptop' && chat.participants.includes(contact._id));
-    if(index !== -1) return this.changeConversation(this.myUser.conversations[index]);    
-    let conv : customTypes.conversationSchema ={
-      _id: undefined,
-      participants: [this.myUser._id, contact._id],
-      type: 'ptop',
-      messages: [],
-    };
+    let index = this.myUser.conversations.findIndex((chat)=>chat.type === 'ptop' && -1 !== chat.participants.findIndex(participant => participant._id === contact._id));
+    if(index !== -1) return this.changeConversation(this.myUser.conversations[index]);
+    let conv = this.commonFn.newConversationObject(undefined, 'ptop', [contact, this.myUser.getUserInfo()]);
     this.userServ.createConversation(conv)
-      .subscribe((data : customTypes.conversationSchema)=>{
-        this.changeConversation(data);
+      .subscribe((data : customTypes.conversationInfo)=>{
+        conv._id = data._id;
+        this.changeConversation(conv);
       });
   }
   typingHandler(){
-    this.socket.UserIsTyping(Object.keys(this.conversation.participants), this.conversation._id, {
-      _id: this.myUser._id,
-      name: this.myUser.name,
-      username: this.myUser.username,
-      email: this.myUser.email
-    });
+    this.socket.UserIsTyping(this.conversation.participants.map(contact => contact._id), this.conversation._id, this.myUser.getUserInfo());
   }
   stopTypingHandler(){
-    this.socket.UserStopTyping(Object.keys(this.conversation.participants), this.conversation._id, {
-      _id: this.myUser._id,
-      name: this.myUser.name,
-      username: this.myUser.username,
-      email: this.myUser.email
-    });
+    this.socket.UserStopTyping(this.conversation.participants.map(contact => contact._id), this.conversation._id, this.myUser.getUserInfo());
+  }
+  onFocus(){
+    if(this.conversation){
+      this.conversation.unreadMessages = 0;
+    }
   }
 }

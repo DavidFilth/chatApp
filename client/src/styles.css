@@ -7,21 +7,16 @@ body {
   background-color: #eee;
 }
 .avatar{
+  width: 70px;
+  height: 70px;
   position: relative;
-  width: 100px;
-  height: 100px;
   border: 1px solid #ddd;
   border-radius: 50%;
   display: inline-block;
   overflow: hidden;
   margin: 0px;
   vertical-align: middle;
-  zoom: 0.70;
-  transform: translateZ(0);
-  -webkit-transform: scale(0.70);
-  -moz-transform: scale(0.70)
 }
-
 /* Let's get this party started */
 ::-webkit-scrollbar {
     width: 5px;
@@ -43,4 +38,57 @@ body {
 }
 ::-webkit-scrollbar-thumb:window-inactive {
 	background: rgba(120,90,120,0.4); 
+}
+ul.nav-pills a.nav-link{
+    position: relative;
+    height: 90px;
+}
+ul.nav-pills a.nav-link:hover{
+    cursor: pointer;
+}
+ul.nav-pills a.nav-link p{
+    color: black;
+}
+p.lastMessage{
+    font-size: 15px;
+}
+div.contact-data p, div.contact-data h5{
+    white-space: nowrap;
+    overflow: hidden;
+    margin-bottom: 0px;
+}
+p.dateMessage{
+    position: relative;
+    bottom: 0px;
+    right: 0px;
+    font-size: 11px;
+}
+ul.nav-pills a.nav-link:hover, .active{
+    color: #fff;
+    background-color: #428bca;
+}
+.contact-img{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 10px;
+}
+.contact-data{
+    margin-left: 90px;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+i.fa-circle, i.fa-circle-o{
+    position: absolute;
+    top: 7px;
+    left: -18px;
+}
+i.fa-circle{
+    color: lightgreen;
+}
+i.fa-circle-o{
+    color: lightgrey;
 }
