@@ -13,7 +13,7 @@
     </div>
     <div class="col-sm-8 offset-sm-4 col-md-9 offset-md-3 main">
       <div *ngIf='conversation'>
-        <current-document [conversation]="conversation" [userId]="myUser._id"></current-document>
+        <current-document [conversation]="conversation" [user]="myUser"></current-document>
         <send-message (send)="sendMessageHandler($event)" (typing)="typingHandler()" (stopTyping)="stopTypingHandler()" (focus)="onFocus()"></send-message>
       </div>
     </div>

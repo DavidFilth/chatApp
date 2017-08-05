@@ -28,8 +28,8 @@ export class CommonFunctionalityService {
   dateToUTC(d: Date){
     return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate(), d.getHours(), d.getMinutes(), d.getSeconds(), d.getMilliseconds())
   }
-  contactFromPtoP(conversation: customTypes.conversationInfo, userId: string) : customTypes.contactInfo{
-    let contactsCopy = conversation.participants.filter(contact => contact._id !== userId);
+  contactFromPtoP(participants: customTypes.contactInfo[], userId: string) : customTypes.contactInfo{
+    let contactsCopy = participants.filter(contact => contact._id !== userId);
     return contactsCopy[0];
   }
 }

@@ -62,10 +62,8 @@ io.on('connection', function (socket) {
     socket.join(userId);
     socket.on('disconnect', ()=> {console.log('user disconected')})
         .on('acceptFriendRequest', (data)=>{
-            console.log('acceptFriend Emited');
             socket.broadcast.to(data.room).emit('acceptedFriendRequest',data.contact);
         }).on('sendFriendRequest', (data)=>{
-            console.log('sendFriend Emited');
             socket.broadcast.to(data.room).emit('incomingFriendRequest', data.contact);
         }).on('typing',(data)=>{
             for(let i = 0; i < data.rooms.length; i++){
@@ -80,7 +78,14 @@ io.on('connection', function (socket) {
                 socket.broadcast.to(data.rooms[i]).emit('message', {message: data.message, conversationId: data.conversation});
             }
         }).on('newConversation', (data)=>{
-            for(let i = 0; i < data.rooms.length; i++)
-            socket.broadcast.to(data.rooms[i]).emit('incomingConversation', data.conversation);
+            for(let i = 0; i < data.rooms.length; i++){
+                socket.broadcast.to(data.rooms[i]).emit('incomingConversation', data.conversation);
+            }
+        }).on('sendStatus', (data)=>{
+            for(let i =0; i < data.rooms.length; i++){
+                socket.broadcast.to(data.rooms[i]).emit('userStatus', {user: data.user, status: data.status});
+            }
+        }).on('respondStatus',(data)=>{
+            socket.broadcast.to(data.room).emit('statusResponse', {user: data.user, status: data.status});
         });
 });

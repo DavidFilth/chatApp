@@ -31,6 +31,12 @@ export class SocketService {
   newConversation(conversation: customTypes.conversationInfo, rooms: string[]){
     this.socket.emit('newConversation', {conversation, rooms});
   }
+  sendMyStatus(rooms : string[], user: customTypes.contactInfo, status: boolean){
+    this.socket.emit('sendStatus', {rooms, user, status});
+  }
+  respondMyStatus(room: string, user: customTypes.contactInfo, status: boolean){
+    this.socket.emit('respondStatus', {room, user, status});
+  }
   incomingConversation(){
     this.observables['incomingConversation'] = this.observables['incomingConversation'] ||
     this.createObservableForSocket('incomingConversation');
@@ -50,6 +56,16 @@ export class SocketService {
     this.observables['userStopTyping'] = this.observables['userStopTyping'] || 
     this.createObservableForSocket('userStopTyping');
     return this.observables['userStopTyping'];
+  }
+  incomingUserStatus(){
+    this.observables['userStatus'] = this.observables['userStatus'] || 
+    this.createObservableForSocket('userStatus');
+    return this.observables['userStatus'];
+  }
+  responseUserStatus(){
+    this.observables['statusResponse'] = this.observables['statusResponse'] || 
+    this.createObservableForSocket('statusResponse');
+    return this.observables['statusResponse'];
   }
   getMessage(){
     this.observables['message'] = this.observables['message'] ||

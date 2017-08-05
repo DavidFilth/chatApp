@@ -26,6 +26,7 @@ export class DashboardComponent{
     this.myUser = this.auth.getUser();
     this.tool = {value: 'conversation-list'};
     this.socket.connect(this.myUser._id);
+    this.socket.sendMyStatus(this.myUser.contacts.map(contact => contact._id), this.myUser.getUserInfo(), true);
     this.socket.incomingConversation()
       .subscribe((data: customTypes.conversationInfo)=>{
       if(data.type === 'group'){
@@ -52,6 +53,17 @@ export class DashboardComponent{
         this.myUser.pendingRequests.push(data);
         this.messages.emit({content: `You have a new friendship request from ${data.name}`, type: 'alert-info' });
       });
+    this.socket.incomingUserStatus()
+      .subscribe((data) =>{
+        this.socket.respondMyStatus(data.user._id, this.myUser.getUserInfo(), true);
+        let index = this.myUser.contacts.findIndex(contact => contact._id === data.user._id);
+        if(index > -1) this.myUser.contacts[index].status = data.status;
+      });
+    this.socket.responseUserStatus()
+      .subscribe((data)=>{
+        let index = this.myUser.contacts.findIndex(contact => contact._id === data.user._id);
+        if(index > -1) this.myUser.contacts[index].status = data.status;
+      });
   }
   changeConversation(conversation : customTypes.conversationInfo){
     this.conversation = conversation;
@@ -66,7 +78,7 @@ export class DashboardComponent{
     let message = this.commonFn.newMessageObject(new Date(), this.myUser.getUserInfo(), form.message, 'text');
     if(this.conversation.messages.length === 0 && this.conversation.type === 'ptop'){
       this.myUser.conversations.push(this.conversation);
-      this.socket.newConversation(this.conversation, [this.commonFn.contactFromPtoP(this.conversation, this.myUser._id)._id]);
+      this.socket.newConversation(this.conversation, [this.commonFn.contactFromPtoP(this.conversation.participants, this.myUser._id)._id]);
     }
     this.conversation.messages.push(message);
     setTimeout(()=>this.document.scrollToBottom(),1);
