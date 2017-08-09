@@ -18,7 +18,6 @@ export class AuthenticationService {
   }
   logout(){
     this.auth = false;
-    this.socket.sendMyStatus(this.user.contacts.map(contact => contact._id),this.user.getUserInfo(), false);
     this.socket.disconnect();
     this.user = null;
     this.router.navigateByUrl('/login');

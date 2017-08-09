@@ -26,7 +26,7 @@ export class DashboardComponent{
     this.myUser = this.auth.getUser();
     this.tool = {value: 'conversation-list'};
     this.socket.connect(this.myUser._id);
-    this.socket.sendMyStatus(this.myUser.contacts.map(contact => contact._id), this.myUser.getUserInfo(), true);
+    this.socket.sendMyStatus(this.myUser.contacts.map(contact => contact._id), this.myUser._id, true);
     this.socket.incomingConversation()
       .subscribe((data: customTypes.conversationInfo)=>{
       if(data.type === 'group'){
@@ -55,13 +55,13 @@ export class DashboardComponent{
       });
     this.socket.incomingUserStatus()
       .subscribe((data) =>{
-        this.socket.respondMyStatus(data.user._id, this.myUser.getUserInfo(), true);
-        let index = this.myUser.contacts.findIndex(contact => contact._id === data.user._id);
+        this.socket.respondMyStatus(data.userId, this.myUser._id, true);
+        let index = this.myUser.contacts.findIndex(contact => contact._id === data.userId);
         if(index > -1) this.myUser.contacts[index].status = data.status;
       });
     this.socket.responseUserStatus()
       .subscribe((data)=>{
-        let index = this.myUser.contacts.findIndex(contact => contact._id === data.user._id);
+        let index = this.myUser.contacts.findIndex(contact => contact._id === data.userId);
         if(index > -1) this.myUser.contacts[index].status = data.status;
       });
   }

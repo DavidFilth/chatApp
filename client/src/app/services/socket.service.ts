@@ -31,11 +31,11 @@ export class SocketService {
   newConversation(conversation: customTypes.conversationInfo, rooms: string[]){
     this.socket.emit('newConversation', {conversation, rooms});
   }
-  sendMyStatus(rooms : string[], user: customTypes.contactInfo, status: boolean){
-    this.socket.emit('sendStatus', {rooms, user, status});
+  sendMyStatus(rooms : string[], userId: string, status: boolean){
+    this.socket.emit('sendStatus', {rooms, userId, status});
   }
-  respondMyStatus(room: string, user: customTypes.contactInfo, status: boolean){
-    this.socket.emit('respondStatus', {room, user, status});
+  respondMyStatus(room: string, userId: string, status: boolean){
+    this.socket.emit('respondStatus', {room, userId, status});
   }
   incomingConversation(){
     this.observables['incomingConversation'] = this.observables['incomingConversation'] ||

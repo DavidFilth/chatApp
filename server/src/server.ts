@@ -58,10 +58,15 @@ let io = socketIO(server);
 
 io.on('connection', function (socket) {
     let userId = socket.handshake.query.userId;
+    let rooms : string[] = [];
     console.log('user connected');
     socket.join(userId);
-    socket.on('disconnect', ()=> {console.log('user disconected')})
-        .on('acceptFriendRequest', (data)=>{
+    socket.on('disconnect', ()=> {
+        for(let i =0; i < rooms.length; i++){
+            socket.broadcast.to(rooms[i]).emit('userStatus', {userId: userId, status: false});
+        }
+        console.log('user disconected');
+        }).on('acceptFriendRequest', (data)=>{
             socket.broadcast.to(data.room).emit('acceptedFriendRequest',data.contact);
         }).on('sendFriendRequest', (data)=>{
             socket.broadcast.to(data.room).emit('incomingFriendRequest', data.contact);
@@ -83,9 +88,10 @@ io.on('connection', function (socket) {
             }
         }).on('sendStatus', (data)=>{
             for(let i =0; i < data.rooms.length; i++){
-                socket.broadcast.to(data.rooms[i]).emit('userStatus', {user: data.user, status: data.status});
+                rooms = data.rooms;
+                socket.broadcast.to(data.rooms[i]).emit('userStatus', {userId: data.userId, status: data.status});
             }
         }).on('respondStatus',(data)=>{
-            socket.broadcast.to(data.room).emit('statusResponse', {user: data.user, status: data.status});
+            socket.broadcast.to(data.room).emit('statusResponse', {userId: data.userId, status: data.status});
         });
 });
