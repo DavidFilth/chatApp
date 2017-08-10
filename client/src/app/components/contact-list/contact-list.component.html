@@ -1,4 +1,4 @@
-<h4> Contacts list </h4>
+<h4 i18n> Contacts list </h4>
 <ul class="nav nav-pills flex-column">
     <li *ngFor="let contact of contacts" (click)='contactSelected.emit(contact)' >
         <a class="nav-link">
@@ -16,7 +16,7 @@
         </a>
     </li>
     <li *ngIf="contacts.length < 1">
-        <div class="alert alert-info" role="alert">
+        <div class="alert alert-info" role="alert" i18n>
              Your list of contacts is empty.
         </div>
     </li>

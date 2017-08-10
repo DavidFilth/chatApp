@@ -1,10 +1,10 @@
-<h4>Search your contacts</h4>
+<h4 i18n>Search your contacts</h4>
 <form [formGroup]='formModel' (ngSubmit)="sendFriendRequest()">
   <div class="form-group row" [ngClass]="{'has-danger': hasError('email')}">
     <div class="col-9">
-      <input type="email" class="form-control" placeholder="Email" formControlName="email">
-      <span class="form-control-feedback" *ngIf="hasError('email', 'email')"> Please enter a valid email </span>
-      <span class="form-control-feedback" *ngIf="hasError('email', 'existEmail')"> There's not user registered with that email </span>
+      <input type="email" class="form-control" placeholder="Email" formControlName="email" i18n-placeholder>
+      <span class="form-control-feedback" *ngIf="hasError('email', 'email')" i18n> Please enter a valid email </span>
+      <span class="form-control-feedback" *ngIf="hasError('email', 'existEmail')" i18n> There's not user registered with that email </span>
     </div>
     <div class="col-3">
       <button type="submit" class="btn btn-success" [disabled]='!formModel.valid'>

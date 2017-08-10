@@ -6,11 +6,21 @@
   <h2 class="navbar-brand">Chat App</h2>
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item" *ngIf="!authService.authenticated()"><a class="nav-link" [routerLink]="['/']">Home</a></li>
-      <li class="nav-item" *ngIf="!authService.authenticated()"><a class="nav-link" [routerLink]="['/login']">Login</a></li>
-      <li class="nav-item" *ngIf="!authService.authenticated()"><a class="nav-link" [routerLink]="['/signup']">Signup</a></li>
-      <li class="nav-item" *ngIf="authService.authenticated()"> <a class="nav-link" [routerLink]="['/dashboard']">Dashboard</a></li>
-      <li class="nav-item" *ngIf="authService.authenticated()"> <a class="nav-link" (click)="authService.logout()">Logout</a></li>
+      <li class="nav-item" *ngIf="!authService.authenticated()">
+        <a class="nav-link" [routerLink]="['/']" i18n>Home</a>
+      </li>
+      <li class="nav-item" *ngIf="!authService.authenticated()">
+        <a class="nav-link" [routerLink]="['/login']" i18n>Login</a>
+      </li>
+      <li class="nav-item" *ngIf="!authService.authenticated()">
+        <a class="nav-link" [routerLink]="['/signup']" i18n>Signup</a>
+      </li>
+      <li class="nav-item" *ngIf="authService.authenticated()">
+        <a class="nav-link" [routerLink]="['/dashboard']" i18n>Dashboard</a>
+      </li>
+      <li class="nav-item" *ngIf="authService.authenticated()">
+        <a class="nav-link" (click)="authService.logout()" i18n>Logout</a>
+      </li>
     </ul>
   </div>
 </nav>

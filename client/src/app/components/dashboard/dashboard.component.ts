@@ -14,15 +14,15 @@ import { CommonFunctionalityService } from '../../services/common-functionality.
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent{
-  @ViewChild(CurrentDocumentComponent) private document : CurrentDocumentComponent;
-  private tool: customTypes.tool;
-  private myUser : customTypes.User;
-  private conversation : customTypes.conversationInfo;
-  constructor(private auth: AuthenticationService, 
-    private userServ : UsersService,
-    private socket: SocketService, 
-    private commonFn: CommonFunctionalityService,
-    private messages: MessagesService){
+  @ViewChild(CurrentDocumentComponent) public document : CurrentDocumentComponent;
+  public tool: customTypes.tool;
+  public myUser : customTypes.User;
+  public conversation : customTypes.conversationInfo;
+  constructor(public auth: AuthenticationService, 
+    public userServ : UsersService,
+    public socket: SocketService, 
+    public commonFn: CommonFunctionalityService,
+    public messages: MessagesService){
     this.myUser = this.auth.getUser();
     this.tool = {value: 'conversation-list'};
     this.socket.connect(this.myUser._id);
@@ -97,7 +97,7 @@ export class DashboardComponent{
       });
       this.tool.value = 'conversation-list';
   }
-  privateConversation(contact: customTypes.contactInfo){
+  publicConversation(contact: customTypes.contactInfo){
     // Search for the chat in the conversations of the user
     let index = this.myUser.conversations.findIndex((chat)=>chat.type === 'ptop' && -1 !== chat.participants.findIndex(participant => participant._id === contact._id));
     if(index !== -1) return this.changeConversation(this.myUser.conversations[index]);

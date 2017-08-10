@@ -1,4 +1,4 @@
-<h4>Pending Requests</h4>
+<h4 i18n>Pending Requests</h4>
 <ul class="nav nav-pills flex-column">
     <li class="nav-item" *ngFor="let req of user.pendingRequests">
         <a class="nav-link">
@@ -19,7 +19,7 @@
         </a>
     </li>
     <li *ngIf="user.pendingRequests.length < 1">
-        <div class="alert alert-info" role="alert">
+        <div class="alert alert-info" role="alert" i18n>
              You have no pending friend requests
         </div>
     </li>

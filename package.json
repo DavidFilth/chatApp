@@ -4,9 +4,9 @@
   "description": "A Browser Chat Application",
   "main": "index.js",
   "scripts": {
-    "fullstack": "gulp fullstack",
-    "front": "cd client && npm start",
-    "backend": "gulp backend"
+    "prod": "gulp prod",
+    "client": "cd client && npm start",
+    "server": "gulp server"
   },
   "repository": {
     "type": "git",

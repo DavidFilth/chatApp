@@ -1,8 +1,8 @@
-<h4>Create a new group</h4>
+<h4 i18n>Create a new group</h4>
 <form #f="ngForm" (ngSubmit)="createGroup.emit({'name': f.value.groupName, 'participants': participants })">
   <div class="form-group row">
     <div class="col-9">
-      <input name="groupName" type="text" class="form-control" placeholder="Type a name for the group" ngModel required>
+      <input name="groupName" type="text" class="form-control" placeholder="Type a name for the group" ngModel required i18n-placeholder>
     </div>
     <div class="col-3">
       <button class="btn btn-success mr-2" type="submit" [disabled]="!f.valid || participants.length < 1">
@@ -12,7 +12,7 @@
   </div>
 </form>
 <div class="form-group">
-  <h5> Select the participants </h5>
+  <h5 i18n> Select the participants </h5>
   <div *ngFor="let contact of contacts">
     <label class="custom-control custom-checkbox">
         <input type="checkbox" class="custom-control-input" (change)="changeDetected($event.target.checked, contact)">

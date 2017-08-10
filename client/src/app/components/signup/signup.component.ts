@@ -15,7 +15,7 @@ import 'rxjs/add/operator/map';
 })
 export class SignupComponent {
   formModel: FormGroup;
-  constructor(fb: FormBuilder, private usersService: UsersService, private router: Router, validServ: ValidatorsService, private messages: MessagesService){
+  constructor(fb: FormBuilder, public usersService: UsersService, public router: Router, validServ: ValidatorsService, public messages: MessagesService){
     this.formModel = fb.group({
       'name': ['', Validators.required],
       'username': ['', [Validators.required, Validators.minLength(6)]],
@@ -33,7 +33,7 @@ export class SignupComponent {
       this.messages.emit({content: 'You are now registered', type:'alert-info'})
     });
   }
-  hasError(field, valid, optional){
+  hasError(field, valid?, optional?){
     let control: any = this.formModel.get(field);
     if(control instanceof FormGroup){
       if(valid === undefined && optional === undefined){

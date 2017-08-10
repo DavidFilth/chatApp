@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="92eee6be6de0b11c924e3ab27db30257159c0a7c" datatype="html">
+        <source>Home</source>
+        <target>Inicio</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\app.component.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
+        <source>Login</source>
+        <target>Ingresar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\app.component.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="717a5e3574fec754fbeb348c2d5561c4d81facc4" datatype="html">
+        <source>Signup</source>
+        <target>Registrarse</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\app.component.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f65253954b66e929a8b4d5ecaf61f9129f8cec64" datatype="html">
+        <source>Dashboard</source>
+        <target>Principal</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\app.component.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bb694b49d408265c91c62799c2b3a7e3151c824d" datatype="html">
+        <source>Logout</source>
+        <target>Salir</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\app.component.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e1ad0b64c3792ae2ca654b0e2dea2812a431436e" datatype="html">
+        <source>Please Log in</source>
+        <target>Iniciar sesión</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\login\login.component.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="91b96d7228b6e05c238fa4e39abfc17ad51a6eef" datatype="html">
+        <source>Email:</source>
+        <target>Correo electrónico:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\login\login.component.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="244aae9346da82b0922506c2d2581373a15641cc" datatype="html">
+        <source>Email</source>
+        <target>Correo electrónico</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\login\login.component.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2947ceb84e08587963c06540d8a7ca9da954d3de" datatype="html">
+        <source> Please enter a valid email </source>
+        <target>Por favor ingresa un correo válido.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\login\login.component.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\add-contact\add-contact.component.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4434eb250f44b5effd90253c0c9f2bf1e69ec13f" datatype="html">
+        <source>Password:</source>
+        <target>Contraseña:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\login\login.component.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c32ef07f8803a223a83ed17024b38e8d82292407" datatype="html">
+        <source>Password</source>
+        <target>Contraseña</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\login\login.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ed2a084ca8de7a6fdeef7b76ea7c2361e7e6aaeb" datatype="html">
+        <source> The password must be at least 6 characters long </source>
+        <target>La contraseña debe ser de al menos 6 caracteres.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\login\login.component.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3116f1ca830c63b0ea7b9e42278236fe2366f684" datatype="html">
+        <source> The password is required </source>
+        <target>La contraseña es necesaria.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\login\login.component.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3eb49d60bd859eb2d9d3a6d380cdf4e0b8252333" datatype="html">
+        <source>Remember me</source>
+        <target>Recordar mis datos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\login\login.component.ts</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="651e25e26e1cd255d79c6bf76dd73bcfed30efde" datatype="html">
+        <source>Log in!</source>
+        <target>Iniciar!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\login\login.component.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c40c132843f349c3aa49730405de1d0ca733aef6" datatype="html">
+        <source>Sign up</source>
+        <target>Abre una cuenta</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8df3a754e561584a8d5ad3eb780fda847185d1b1" datatype="html">
+        <source>It’s free and always will be.</source>
+        <target>Es gratis y lo será siempre.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7103dfae596fc7df3e859ddc94a442509e8b233d" datatype="html">
+        <source>Name: </source>
+        <target>Nombre: </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="484b0e541230d60ddb5fbd771a34a5c8d90e7a57" datatype="html">
+        <source>Full Name</source>
+        <target>Nombre completo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e7fdcad0ab4afbf506ed58e1572918ab6d724b7a" datatype="html">
+        <source> Name is required </source>
+        <target>Se requiere un nombre.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b178be75f0f598db3e4f00d9a385955269dcd7b3" datatype="html">
+        <source>User Name: </source>
+        <target>Nombre de usuario:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4fcb6dbd1b656de4f606e061af0ed606d3fdc547" datatype="html">
+        <source>User Name</source>
+        <target>Nombre de usuario</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4d55baaf6a97e7e2628be8e0079051dfd818f2b5" datatype="html">
+        <source> User Name is required </source>
+        <target>Se requiere un nombre de usuario.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="73be14455902b6bda863691629c06543f8cb536b" datatype="html">
+        <source> User Name must be at least 6 characters long. </source>
+        <target>El nombre de usuario debe ser de al menos 6 caracteres.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="60e9ef0c07c843773f327abb83919f63d833ad6b" datatype="html">
+        <source>Email: </source>
+        <target>Correo electrónico:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="69b6ac577a19acc39fc0c22342092f327fff2529" datatype="html">
+        <source>Email address</source>
+        <target>Correo electrónico</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c3af43c29cf0a3bdc47ceb3659b32eea3032badd" datatype="html">
+        <source> This email is already used </source>
+        <target>Este correo ya esta en uso</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e2ecc685980562307d4c924aba4613af00288a09" datatype="html">
+        <source>Password: </source>
+        <target>Contraseña:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1d8ad69409f533dee172cd85b5e8267cb1b0e706" datatype="html">
+        <source>Confirm Password: </source>
+        <target>Confirmar contraseña:</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c1b7e6d75ff4285c7636c67e5ef259629b81725b" datatype="html">
+        <source>Confirm Password</source>
+        <target>Confirmar contraseña</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="08a541a9ba52932cc51aa5035c5a4eb97113817d" datatype="html">
+        <source> Passwords must match </source>
+        <target>Las contraseñas deben coincidir</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e19fcf996343543e13789f17b550ab0c08124b5c" datatype="html">
+        <source>Create Account</source>
+        <target>Abrir una cuenta</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\signup\signup.component.ts</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="09f81280693df9422f10c314c2fd194903554a6b" datatype="html">
+        <source>Browser Chat App</source>
+        <target>Chat para navegador</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\home\home.component.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="602d5cb0d221f91182a50f616e216a5f8dc551fc" datatype="html">
+        <source>Sign up today</source>
+        <target>Registrate hoy</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\home\home.component.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="38a4a9c567cc9238dd6adcf7491d3f0d65c312a3" datatype="html">
+        <source>Clear conversation</source>
+        <target>Borrar conversación</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\current-document\current-document.component.ts</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f8fc3e501646e44ea402c8057efb9b9f6f4aff9a" datatype="html">
+        <source>Delete contact</source>
+        <target>Borrar contacto</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\current-document\current-document.component.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7603b2770b9e5b8b1342e108eb6158c9346ee20c" datatype="html">
+        <source>Leave group</source>
+        <target>Abandonar el grupo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\current-document\current-document.component.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a26efc76cdcdad5802b64369eeb9bd635e811dc4" datatype="html">
+        <source>Edit Participants</source>
+        <target>Modificar participantes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\current-document\current-document.component.ts</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="84c7727c82ef76c67ac7843f19dd854774d4a0e8" datatype="html">
+        <source> Contacts list </source>
+        <target>Lista de contactos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\contact-list\contact-list.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4be262da91c9d1f64ce40f64bc61df0be16c6bd5" datatype="html">
+        <source>
+             Your list of contacts is empty.
+        </source>
+        <target>Tu lista de contactos esta vacía</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\contact-list\contact-list.component.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a64294df950bff4b992aa2d08ae46627e810d11b" datatype="html">
+        <source>Search your contacts</source>
+        <target>Busca a tus amigos</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\add-contact\add-contact.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ee56b8637c5b95e2464b23acf342404d3073b12b" datatype="html">
+        <source> There&apos;s not user registered with that email </source>
+        <target>No existe algún usuario registrado con ese correo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\add-contact\add-contact.component.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d9904d5ee428046cabcaa784690cb7b499a1161d" datatype="html">
+        <source>Pending Requests</source>
+        <target>Solicitudes pendientes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\pending-requests\pending-requests.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="423486169dea97ade5e215950e7903bc6205b3a4" datatype="html">
+        <source>
+             You have no pending friend requests
+        </source>
+        <target>No tienes solicitudes de contacto pendientes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\pending-requests\pending-requests.component.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4e2eddbbd3340b5c0ba4f53a90c1a6484f7c3b8b" datatype="html">
+        <source>Recents</source>
+        <target>Recientes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\conversations-list\conversations-list.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="036f32d8d39f9066e05e2fbe0a05224261516f67" datatype="html">
+        <source>
+             You have no recent conversations
+        </source>
+        <target>No tienes conversaciones recientes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\conversations-list\conversations-list.component.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d73f35086f4518ee23248c60f56dbc0f403577b9" datatype="html">
+        <source>Write your message...</source>
+        <target>Escribe un mensaje...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\send-message\send-message.component.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f5107331eb9fdd387751866b18c225f7a569045a" datatype="html">
+        <source>Create a new group</source>
+        <target>Crear un grupo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\create-group\create-group.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="64b066a1f2c42e67de8cfe5a12dda9a62794fd68" datatype="html">
+        <source>Type a name for the group</source>
+        <target>Escribe el nombre del grupo</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\create-group\create-group.component.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f95772fcec68a4860bb347a32f597d3092e943a5" datatype="html">
+        <source> Select the participants </source>
+        <target>Selecciona a los participantes</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app\components\create-group\create-group.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

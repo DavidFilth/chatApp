@@ -17,11 +17,11 @@ import 'rxjs/add/operator/catch';
 
 export class LoginComponent {
   formModel: FormGroup;
-  constructor(private fb: FormBuilder, 
-              private usersService: UsersService,
-              private router: Router,
-              private messages: MessagesService,
-              private authService: AuthenticationService){
+  constructor(public fb: FormBuilder, 
+              public usersService: UsersService,
+              public router: Router,
+              public messages: MessagesService,
+              public authService: AuthenticationService){
     this.formModel = fb.group({
       'email': ['', Validators.email ],
       'password': ['', [Validators.required, Validators.minLength(6)]]
@@ -39,7 +39,7 @@ export class LoginComponent {
         this.messages.emit({ content: 'You are now logged in', type: 'alert-info'})
       });
   }
-  hasError(field, valid, optional){
+  hasError(field, valid?, optional?){
     let control: any = this.formModel.get(field);
     if(control instanceof FormGroup){
       if(valid === undefined && optional === undefined){

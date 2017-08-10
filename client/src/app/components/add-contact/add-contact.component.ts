@@ -15,11 +15,11 @@ export class AddContactComponent{
   @Input() user : customTypes.User;
   formModel: FormGroup;
   constructor(
-    private usersServ: UsersService, 
-    private validators: ValidatorsService, 
-    private fb: FormBuilder, 
-    private message: MessagesService,
-    private socket: SocketService) {
+    public usersServ: UsersService, 
+    public validators: ValidatorsService, 
+    public fb: FormBuilder, 
+    public message: MessagesService,
+    public socket: SocketService) {
       this.formModel = fb.group({
         'email': ['', Validators.email, validators.existingEmail]
       });
@@ -54,7 +54,7 @@ export class AddContactComponent{
         });
     }
   }
-  hasError(field, valid, optional){
+  hasError(field, valid?, optional?){
     let control: any = this.formModel.get(field);
     if(control instanceof FormGroup){
       if(valid === undefined && optional === undefined){

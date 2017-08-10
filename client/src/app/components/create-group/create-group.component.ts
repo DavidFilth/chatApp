@@ -8,8 +8,8 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 export class CreateGroupComponent implements OnInit {
   @Input() user : customTypes.User;
   @Output() createGroup = new EventEmitter();
-  private contacts : customTypes.contactInfo[];
-  private participants : customTypes.contactInfo[];
+  public contacts : customTypes.contactInfo[];
+  public participants : customTypes.contactInfo[];
   constructor() {}
   ngOnInit(){
     this.participants = [];

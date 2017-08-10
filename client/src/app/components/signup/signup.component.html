@@ -1,50 +1,50 @@
 <div class="container">
-  <h2 class="form-signin-heading">Sign up</h2>
-  <h4>It’s free and always will be.</h4>
+  <h2 class="form-signin-heading" i18n>Sign up</h2>
+  <h4 i18n>It’s free and always will be.</h4>
   <form (ngSubmit)="signUp()" [formGroup]='formModel'>
     <div class="form-group row" [ngClass]="{'has-danger': hasError('name')}">
-      <label for="name" class="col-sm-2 col-form-label">Name: </label>
+      <label for="name" class="col-sm-2 col-form-label" i18n>Name: </label>
       <div class="col-sm-10">
-        <input id='name'type="text" class="form-control" placeholder="Full Name" formControlName="name" >
-        <span class="form-control-feedback" *ngIf="hasError('name','required')"> Name is required </span>
+        <input id='name'type="text" class="form-control" placeholder="Full Name" formControlName="name" i18n-placeholder>
+        <span class="form-control-feedback" *ngIf="hasError('name','required')" i18n> Name is required </span>
       </div>
     </div>
     <div class="form-group row" [ngClass]="{'has-danger': hasError('username')}">
-      <label for="user" class="col-sm-2 col-form-label">User Name: </label>
+      <label for="user" class="col-sm-2 col-form-label" i18n>User Name: </label>
       <div class="col-sm-10">
-        <input id='user' type="text" class="form-control" placeholder="User Name" formControlName="username">
-        <span class="form-control-feedback" *ngIf="hasError('username', 'required')"> User Name is required </span>
-        <span class="form-control-feedback" *ngIf="hasError('username', 'minlength')"> User Name must be at least 6 characters long. </span>
+        <input id='user' type="text" class="form-control" placeholder="User Name" formControlName="username" i18n-placeholder>
+        <span class="form-control-feedback" *ngIf="hasError('username', 'required')" i18n> User Name is required </span>
+        <span class="form-control-feedback" *ngIf="hasError('username', 'minlength')" i18n> User Name must be at least 6 characters long. </span>
       </div>
     </div>
     <div class="form-group row" [ngClass]="{'has-danger': hasError('email')}">
-      <label for="mail" class="col-sm-2 col-form-label">Email: </label>
+      <label for="mail" class="col-sm-2 col-form-label" i18n>Email: </label>
       <div class="col-sm-10">
-        <input id='mail' type="email" class="form-control" placeholder="Email address" formControlName="email">
-        <span class="form-control-feedback" *ngIf="hasError('email', 'email')"> Please enter a valid email </span>
-        <span class="form-control-feedback" *ngIf="hasError('email', 'notAvailable')"> This email is already used </span>
+        <input id='mail' type="email" class="form-control" placeholder="Email address" formControlName="email" i18n-placeholder>
+        <span class="form-control-feedback" *ngIf="hasError('email', 'email')" i18n> Please enter a valid email </span>
+        <span class="form-control-feedback" *ngIf="hasError('email', 'notAvailable')" i18n> This email is already used </span>
       </div>
     </div>
     <div formGroupName="passwordGroup">
       <div class="form-group row" [ngClass]="{'has-danger': hasError('passwordGroup', 'password')}">
-        <label for="pass" class="col-sm-2 col-form-label">Password: </label>
+        <label for="pass" class="col-sm-2 col-form-label" i18n>Password: </label>
         <div class="col-sm-10">
-          <input id="pass" type="password" class="form-control" placeholder="Password" formControlName="password">
-          <span class="form-control-feedback" *ngIf="hasError('passwordGroup', 'password' ,'minlength')"> The password must be at least 6 characters long </span>
-          <span class="form-control-feedback" *ngIf="hasError('passwordGroup', 'password' ,'required')"> The password is required </span>
+          <input id="pass" type="password" class="form-control" placeholder="Password" formControlName="password" i18n-placeholder>
+          <span class="form-control-feedback" *ngIf="hasError('passwordGroup', 'password' ,'minlength')" i18n> The password must be at least 6 characters long </span>
+          <span class="form-control-feedback" *ngIf="hasError('passwordGroup', 'password' ,'required')" i18n> The password is required </span>
         </div>
       </div>
       <div class="form-group row" [ngClass]="{'has-danger': hasError('passwordGroup')}">
-        <label for="passconf" class="col-sm-2 col-form-label">Confirm Password: </label>
+        <label for="passconf" class="col-sm-2 col-form-label" i18n>Confirm Password: </label>
         <div class="col-sm-10">
-          <input id="passconf" type="password" class="form-control" placeholder="Confirm Password" formControlName="pconfirm">
-          <span class="form-control-feedback" *ngIf="hasError('passwordGroup')"> Passwords must match </span>
+          <input id="passconf" type="password" class="form-control" placeholder="Confirm Password" formControlName="pconfirm" i18n-placeholder>
+          <span class="form-control-feedback" *ngIf="hasError('passwordGroup')" i18n> Passwords must match </span>
         </div>
       </div>
     </div>
     <div class="form-group row">
       <div class="offset-sm-2 col-sm-10">
-        <button class="btn btn-lg btn-success btn-block" type="submit" [disabled]="!formModel.valid">Create Account</button>
+        <button class="btn btn-lg btn-success btn-block" type="submit" [disabled]="!formModel.valid" i18n>Create Account</button>
       </div>
     </div>
   </form>

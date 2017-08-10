@@ -11,9 +11,9 @@ import { CommonFunctionalityService } from '../../services/common-functionality.
 export class CurrentDocumentComponent implements OnInit{
   @Input() conversation : customTypes.conversationInfo;
   @Input() user : customTypes.User;
-  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
-  private switch : boolean = false;
-  constructor(private commonFn: CommonFunctionalityService, private socket: SocketService ) {
+  @ViewChild('scrollMe') public myScrollContainer: ElementRef;
+  public switch : boolean = false;
+  constructor(public commonFn: CommonFunctionalityService, public socket: SocketService ) {
     this.socket.getMessage().subscribe((data)=>{
       if(data.conversationId === this.conversation._id){
         this.conversation.messages.push(data.message);

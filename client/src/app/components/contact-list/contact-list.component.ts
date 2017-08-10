@@ -11,6 +11,6 @@ import { AuthenticationService } from '../../services/authentication.service'
 export class ContactListComponent{
   @Input() contacts : customTypes.contactInfo[];
   @Output() contactSelected = new EventEmitter();
-  constructor(private usersServ: UsersService, private authService: AuthenticationService){
+  constructor(public usersServ: UsersService, public authService: AuthenticationService){
   }
 }

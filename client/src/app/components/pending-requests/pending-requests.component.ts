@@ -11,7 +11,7 @@ import { SocketService } from '../../services/socket.service';
 })
 export class PendingRequestsComponent{
   @Input() user : customTypes.User;
-  constructor(private usersServ: UsersService, private messageServ: MessagesService, private socket: SocketService) {}
+  constructor(public usersServ: UsersService, public messageServ: MessagesService, public socket: SocketService) {}
   resolveFriendRequest( contact : customTypes.contactInfo , res : boolean){
     this.usersServ.resolveFriendshipRequest({userId: this.user._id, contactId: contact._id, response: res})
       .subscribe((data) =>{

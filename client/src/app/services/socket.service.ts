@@ -11,7 +11,7 @@ export class SocketService {
   constructor() {
   }
   connect(user){
-    this.socket = io('http://192.168.1.86:3000', {query: {userId:user}});
+    this.socket = io('http://192.168.1.73:3000', {query: {userId:user}});
   }
   sendMessage(rooms: string[], message : customTypes.Message, conversation: string){
     this.socket.emit('sendMessage', {rooms, message, conversation});

@@ -11,7 +11,7 @@ export class ConversationsListComponent{
   @Input() conversations : customTypes.conversationInfo[];
   @Input() user: customTypes.User;
   @Output() conversationSelected  = new EventEmitter();
-  constructor(private socket: SocketService) {
+  constructor(public socket: SocketService) {
     this.socket.incomingUserTyping()
       .subscribe((data: any)=>{
         let index = this.conversations.findIndex(conv => conv._id === data.conversation);

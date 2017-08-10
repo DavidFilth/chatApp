@@ -1,4 +1,4 @@
-<h4>Recents</h4>
+<h4 i18n>Recents</h4>
 <ul class="nav nav-pills flex-column">
     <li class="nav-item" *ngFor="let conv of conversations" (click)="conversationSelected.emit(conv)" >
         <a class="nav-link">
@@ -18,7 +18,7 @@
         </a>
     </li>
     <li *ngIf="conversations.length < 1">
-        <div class="alert alert-info" role="alert">
+        <div class="alert alert-info" role="alert" i18n>
              You have no recent conversations
         </div>
     </li>
