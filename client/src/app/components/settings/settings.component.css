@@ -1,0 +1,7 @@
+div.card{
+    margin: auto;
+}
+.no-border{
+    border: 0;
+    box-shadow: none;
+}

@@ -11,7 +11,7 @@
     "e2e": "ng e2e",
     "i18n": "ng xi18n --output-path src/locale -p src/tsconfig.json",
     "serve-i18n:es": "ng serve --aot --i18n-file=src/locale/messages.es.xlf --i18n-format=xlf --locale=es --proxy-config proxy.conf.json",
-    "serve-i18n:en": "ng serve --aot --i18n-file=src/locale/messages.en.xlf --i18n-format=xlf --locale=en",
+    "serve-i18n:en": "ng serve --aot --i18n-file=src/locale/messages.en.xlf --i18n-format=xlf --locale=en --proxy-config proxy.conf.json",
     "build-i18n:es": "ng build --output-path=dist/es --aot -prod --bh /es/ --i18n-file=src/locale/messages.es.xlf --i18n-format=xlf --locale=es",
     "build-i18n:en": "ng build --output-path=dist/en --aot -prod --bh /en/ --i18n-file=src/locale/messages.en.xlf --i18n-format=xlf --locale=en",
     "build-i18n": "npm run build-i18n:en && npm run build-i18n:es"

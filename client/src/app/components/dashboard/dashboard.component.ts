@@ -97,7 +97,7 @@ export class DashboardComponent{
       });
       this.tool.value = 'conversation-list';
   }
-  publicConversation(contact: customTypes.contactInfo){
+  privateConversation(contact: customTypes.contactInfo){
     // Search for the chat in the conversations of the user
     let index = this.myUser.conversations.findIndex((chat)=>chat.type === 'ptop' && -1 !== chat.participants.findIndex(participant => participant._id === contact._id));
     if(index !== -1) return this.changeConversation(this.myUser.conversations[index]);

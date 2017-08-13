@@ -16,12 +16,9 @@ let port = process.env.PORT || 3000;
 let mongoUrl = process.env.MONGO || 'mongodb://localhost/Chat';
 
 //Connect to mongoDB
-let db = mongoose.connect(mongoUrl, function(err){
-    if(err){
-        console.error(err);
-    } else{
-        console.log('Succesfully connected to ', mongoUrl);
-    }
+let db = mongoose.connect(mongoUrl,{
+    user: "davidFilth",
+    pass: "Sanchez#2101",
 });
 
 // Body Parser MW

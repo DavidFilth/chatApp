@@ -1,13 +1,13 @@
 <h4 i18n>Recents</h4>
 <ul class="nav nav-pills flex-column">
-    <li class="nav-item" *ngFor="let conv of conversations" (click)="conversationSelected.emit(conv)" >
+    <li class="nav-item" *ngFor="let conv of conversations" (click)="conversationSelected.emit(conv)">
         <a class="nav-link">
             <div class="contact-img">
                 <img src="http://placehold.it/70x70" alt="none" class="avatar">
             </div>
             <div class="contact-data">
-                <h5> {{ getTitle(conv) }}  <span class="badge badge-pill badge-danger" *ngIf="conv.unreadMessages > 0" > {{ conv.unreadMessages }}</span> </h5>
-                <div *ngIf="conv.lastMessage">
+                <h5> {{ getTitle(conv) }} <span class="badge badge-pill badge-danger" *ngIf="conv.unreadMessages > 0"> {{ conv.unreadMessages }}</span>                    </h5>
+                <div *ngIf="conv.lastMessage && conv.lastMessage.from">
                     <p class="lastMessage mb-0"> <strong>{{conv.lastMessage.from.name }}: </strong> {{conv.lastMessage.content}}</p>
                     <p class="dateMessage mb-0"> {{conv.lastMessage.date | date:'short'}}</p>
                     <p *ngIf="conv.usersTyping">
@@ -19,7 +19,7 @@
     </li>
     <li *ngIf="conversations.length < 1">
         <div class="alert alert-info" role="alert" i18n>
-             You have no recent conversations
+            You have no recent conversations
         </div>
     </li>
 </ul>

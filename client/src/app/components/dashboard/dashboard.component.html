@@ -9,6 +9,7 @@
         <conversations-list *ngSwitchCase="'conversation-list'" [conversations]="myUser.conversations" (conversationSelected)="changeConversation($event)" [user]="myUser"></conversations-list>
         <contact-list *ngSwitchCase="'contact-list'" [contacts]="myUser.contacts" (contactSelected)="privateConversation($event)" ></contact-list>
         <add-contact *ngSwitchCase="'add-contact'" [user]="myUser" ></add-contact>
+        <settings *ngSwitchCase="'settings'" [user]="myUser"></settings>
       </div>
     </div>
     <div class="col-sm-8 offset-sm-4 col-md-9 offset-md-3 main">

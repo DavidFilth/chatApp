@@ -1,0 +1,45 @@
+<form>
+  <div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="http://placehold.it/320x180" alt="Card image cap">
+    <div class="card-block">
+      <h4 class="card-title">{{user.name}}</h4>
+    </div>
+    <table class="table table-hover">
+      <tbody>
+        <tr>
+          <td>User Name:</td>
+          <td><input type="email" class="form-control no-border" id="inputEmail3" placeholder="User Name" value="{{user.username}}"
+              [disabled]="editUsername"></td>
+          <td>
+            <i class="fa" [ngClass]="{'fa-pencil-square-o': editUsername, 'fa-times': !editUsername}" aria-hidden="true" (click)="editUsername = !editUsername"></i>
+          </td>
+        </tr>
+        <tr>
+          <td>Email:</td>
+          <td>
+            <input type="email" class="form-control no-border" id="inputEmail3" placeholder="Email" value="{{user.email}}" disabled>
+          </td>
+          <td><i class="fa fa-ban" aria-hidden="true"></i></td>
+        </tr>
+        <tr>
+          <td>Language:</td>
+          <td>
+            <select class="form-control" [disabled]="editLanguage">
+              <option value="es" [selected]="true">Spanish</option>
+              <option value="en" [selected]="false">English</option>
+            </select>
+          </td>
+          <td><i class="fa" [ngClass]="{'fa-pencil-square-o': editLanguage, 'fa-times': !editLanguage}" aria-hidden="true" (click)="editLanguage = !editLanguage"></i></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="card-block">
+      <a class="card-link btn btn-success">
+        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+      </a>
+      <a class="card-link btn btn-danger">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+</form>

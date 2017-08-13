@@ -26,7 +26,8 @@ import { ConversationsListComponent } from './components/conversations-list/conv
 import { SocketService } from './services/socket.service';
 import { SendMessageComponent } from './components/send-message/send-message.component';
 import { CreateGroupComponent } from './components/create-group/create-group.component';
-import { CustomPipe } from './pipes/custom.pipe'
+import { CustomPipe } from './pipes/custom.pipe';
+import { SettingsComponent } from './components/settings/settings.component'
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import { CustomPipe } from './pipes/custom.pipe'
     ConversationsListComponent,
     SendMessageComponent,
     CreateGroupComponent,
-    CustomPipe
+    CustomPipe,
+    SettingsComponent
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy }, 
