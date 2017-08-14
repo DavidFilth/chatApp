@@ -23,14 +23,15 @@ export class SignupComponent {
       'passwordGroup': fb.group({
         'password': ['', [Validators.required, Validators.minLength(6)]],
         'pconfirm': ['']
-      }, { validator: validServ.equalValidator})
+      }, { validator: validServ.equalValidator}),
+      'language':['en']
     });
   }
   signUp(){
-    let  {name, username, email, passwordGroup: {password: password} } = this.formModel.value;
-    this.usersService.signUpUser({name, username, email, password}).subscribe(data =>{
+    let  {name, username, email, language, passwordGroup: {password: password} } = this.formModel.value;
+    this.usersService.signUpUser({name, username, email, password, language}).subscribe(data =>{
       this.router.navigateByUrl('/login');
-      this.messages.emit({content: 'You are now registered', type:'alert-info'})
+      this.messages.emit({content: 'You are now registered', type:'alert-info'});
     });
   }
   hasError(field, valid?, optional?){

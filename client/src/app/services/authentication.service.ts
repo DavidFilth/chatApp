@@ -41,15 +41,7 @@ export class AuthenticationService {
         res+=this.user.conversations[i].unreadMessages;
       }
       return res;
-    }
-    for(let i = 0 ; i < this.user.conversations.length; i++){
-      this.userServ.getLastMessage(this.user.conversations[i]._id)
-        .subscribe((data: customTypes.Message)=>{
-          this.user.conversations[i].lastMessage = data;
-        });
-      this.user.conversations[i].unreadMessages = 0;
-      this.user.conversations[i].usersTyping = [];
-    }
+    };
     this.auth = true;
   }
   updateUser(user : customTypes.User){

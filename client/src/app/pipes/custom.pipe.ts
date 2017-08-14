@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CustomPipe implements PipeTransform {
 
-  transform(value: customTypes.conversationInfo[], args?: any): any {
+  transform(value: customTypes.conversationItem[], args?: any): any {
     console.log('hey');
     return value.sort((a,b)=>{
       return b.unreadMessages - a.unreadMessages;

@@ -10,34 +10,38 @@ declare namespace customTypes {
         username: string;
         email: string;
         password: string;
-        contacts: contactInfo[];
-        conversations: conversationInfo[];
-        pendingRequests: contactInfo[];
-        getUserInfo() : contactInfo;
+        contacts: contact[];
+        conversations: conversationItem[];
+        pendingRequests: contact[];
+        language: string;
+        getUserInfo() : contact;
         countUnreadMessages() : number;
     }
-
-    export interface contactInfo{
+    export interface conversationItem{
+        unreadMessages: number;
+        info: Conversation;
+        messages?: Message[];
+    }
+    export interface contact{
         _id: string;
         name: string;
         email: string;
         username: string;
         status?: boolean;
     }
-    export interface conversationInfo{
+    export interface Conversation{
         _id: string;
-        name : string;
+        name?: string;
         type: string;
-        participants: contactInfo[];
-        usersTyping?: contactInfo[];
-        messages?: Message[];
+        participants: contact[];
+        usersTyping?: contact[];
         lastMessage?: Message;
-        unreadMessages: number;
+        admin?: contact;
     }
     export interface Message{
         _id: string;
         date: number;
-        from: contactInfo;
+        from: contact;
         content: string;
         type: string;
     }
@@ -50,10 +54,10 @@ declare namespace customTypes {
     }
     export interface groupForm{
         name: string;
-        participants: contactInfo[];
+        participants: contact[];
     }
     export interface friendRequest{
         status: number;
-        contact: contactInfo;
+        contact: contact;
     }
 }

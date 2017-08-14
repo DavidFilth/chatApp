@@ -9,7 +9,7 @@ import { AuthenticationService } from '../../services/authentication.service'
   styleUrls: ['./contact-list.component.css']
 })
 export class ContactListComponent{
-  @Input() contacts : customTypes.contactInfo[];
+  @Input() contacts : customTypes.contact[];
   @Output() contactSelected = new EventEmitter();
   constructor(public usersServ: UsersService, public authService: AuthenticationService){
   }

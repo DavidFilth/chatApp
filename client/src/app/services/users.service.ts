@@ -20,20 +20,10 @@ export class UsersService {
         return res.json();
       });
   }
-  searchUser(id){
-    return this.http.get('/api/user/search/contact/' + id).map(function(data){
+  getMessages( conversationId : string ){
+    return this.http.get('/api/user/search/conversationMessages/' + conversationId).map(function(data){
       return data.json() ;
     });
-  }
-  searchConversation( conversationId : string ){
-    return this.http.get('/api/user/search/conversation/' + conversationId).map(function(data){
-      return data.json() ;
-    });
-  }
-  searchMessage(id){
-    return this.http.get('/api/user/search/message/' + id).map(function(data){
-      return data.json();
-    })
   }
   sendFriendshipRequest(data){
     var headers = new Headers(); 
@@ -59,14 +49,16 @@ export class UsersService {
         return res.json();
       });
   }
-  createConversation(data: customTypes.conversationInfo){
+  createConversation(data: customTypes.Conversation){
     let headers = new Headers();
     headers.append('Content-type', 'application/json');
     return this.http.post('/api/user/createConversation', JSON.stringify(data), {headers: headers})
       .map(res => res.json());
   }
-    getLastMessage(conversationId : string){
-      return this.http.get('/api/user/search/lastMessage/' + conversationId)
-        .map(res => res.json());
-    }
+  clearUnreadMessages(userId: string, conversationId: string){
+    let headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    return this.http.post('/api/user/clearUnreadMessage', JSON.stringify({userId, conversationId}), {headers: headers})
+      .map(res => res.json())
+  }
 }

@@ -5,58 +5,18 @@ import { Message } from '../model/message'
 
 let userRoute = express.Router();
 
-// Get user's name and username
-userRoute.get('/search/contact/:id', function (req, res) {
-  User.findById(req.params.id, function (err, data: any) {
-    if (err) {
-      res.send(err);
-    }
-    if (!data) {
-      res.send(data);
-    }
-    res.send({ _id: data._id, name: data.name, email: data.email, username: data.username });
-  });
-});
-userRoute.get('/search/conversation/:id', function (req, res) {
-  Conversation.findById(req.params.id)
-    .populate({ path: 'messages', select: '_id date from content type', populate: { path: 'from', select: '_id name username email' } })
+userRoute.get('/search/conversationMessages/:id', function (req, res) {
+  Message.find({conversation: req.params.id})
+    .populate({ path: 'from', select: '_id name username email' })
     .exec((err, data) => {
       if (err) {
         res.send(err);
       } else {
         res.send(data);
       }
-    })
+    });
 });
-userRoute.get('/search/message/:id', function (req, res) {
-  Message.findById(req.params.id, function (err, data) {
-    if (err) {
-      res.send(err);
-    } else if (!data) {
-      res.send(data);
-    } else {
-      res.send(data);
-    }
-  });
-});
-userRoute.get('/search/lastMessage/:id', function(req, res){
-  Conversation.findById(req.params.id,(convError, data : any)=>{
-    if(convError) res.send(convError);
-    else if (!data) res.send(data);
-    else{
-      if(data.messages.length === 0) res.send({});
-      else{
-        let last = data.messages[data.messages.length - 1];
-        Message.findById(last)
-          .populate('from', '_id name username email')
-          .exec((messageError, message)=>{
-            if(messageError) res.send(messageError);
-            else res.send(message);
-          });
-      }
-    }
-  });
-})
+
 userRoute.post('/sendFriendshipRequest', function (req, res) {
   User.findOne({ email: req.body.contact }, function (err, contact: any) {
     if (err) {
@@ -124,43 +84,42 @@ userRoute.post('/resolveFriendRequest', function (req, res) {
 });
 userRoute.post('/postMessage', function (req, res) {
   var newMessage = new Message(req.body.message);
-  newMessage.save((err, message) => {
-    if (err) {
+  newMessage.save((err, message: any)=>{
+    if(err){
       res.send(err);
-    } else if (!message) {
-      res.send(message);
     } else {
-      Conversation.findById(req.body.conversationId, (error, conversation: any) => {
-        if (error) {
-          res.send(error)
-        } else if (!conversation) {
-          res.send(conversation);
-        } else {
-          if (conversation.messages.length === 0 && conversation.type === 'ptop') {
-            for (let i = 0; i < conversation.participants.length; i++) {
-              User.findById(conversation.participants[i], (err, user: any) => {
-                if (err) {
-                  res.send(err);
-                } else if (!user) {
-                  res.send(user)
-                } else {
-                  user.conversations.push(conversation._id);
-                  user.save();
+      Conversation.findById(message.conversation).exec((err, conversation : any)=>{
+        if(err){
+          res.send(err);
+        } else{
+          for(let i=0; i < conversation.participants.length; i++){
+            User.findById(conversation.participants[i]).exec((err, user : any)=>{
+              if(err){
+                res.send(err);
+              }else{
+                let index = user.conversations.findIndex(conv => String(conv.info) === String(conversation._id));
+                if(index === -1){
+                  user.conversations.push({
+                    unreadMessages: String(message.from) !== String(user._id) ? 1 : 0,
+                    info: conversation._id
+                  });
+                } else if(String(message.from) !== String(user._id)){
+                  user.conversations[index].unreadMessages++;
                 }
-              });
-            }
+                user.save();
+              }
+            });
           }
-          conversation.messages.push(message._id);
+          conversation.lastMessage = message._id;
           conversation.save();
-          res.send(message);
         }
       });
+      res.send(message);
     }
   });
 });
 userRoute.post('/createConversation', function (req, res) {
   if (req.body.type === 'ptop') {
-    console.log('participants: ', req.body.participants);
     Conversation.findOne({ type: req.body.type, participants: {$all:req.body.participants.map(contact=>contact._id )}})
       .populate('participants', '_id name username email')
       .exec((err, data) => {
@@ -197,7 +156,10 @@ userRoute.post('/createConversation', function (req, res) {
               } else if (!user) {
                 res.send(user)
               } else {
-                user.conversations.push(conv._id);
+                user.conversations.push({
+                  unreadMessages: 1,
+                  info: conv._id
+                });
                 user.save();
               }
             });
@@ -207,5 +169,21 @@ userRoute.post('/createConversation', function (req, res) {
       });
     });
   }
+});
+userRoute.post('/clearUnreadMessage', function(req, res){
+  User.findById(req.body.userId).exec((err, user :any)=>{
+    if(err){
+      res.send(err);
+    } else{
+      if(user){
+        let index = user.conversations.findIndex(conv => String(conv.info) === String(req.body.conversationId));
+        if(index !== -1){
+          user.conversations[index].unreadMessages = 0;
+          user.save();
+        }
+      }
+      res.send({status: true});
+    }
+  });
 });
 export { userRoute }

@@ -12,7 +12,7 @@ import { SocketService } from '../../services/socket.service';
 export class PendingRequestsComponent{
   @Input() user : customTypes.User;
   constructor(public usersServ: UsersService, public messageServ: MessagesService, public socket: SocketService) {}
-  resolveFriendRequest( contact : customTypes.contactInfo , res : boolean){
+  resolveFriendRequest( contact : customTypes.contact , res : boolean){
     this.usersServ.resolveFriendshipRequest({userId: this.user._id, contactId: contact._id, response: res})
       .subscribe((data) =>{
         if(data.status){

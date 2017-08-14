@@ -8,8 +8,8 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 export class CreateGroupComponent implements OnInit {
   @Input() user : customTypes.User;
   @Output() createGroup = new EventEmitter();
-  public contacts : customTypes.contactInfo[];
-  public participants : customTypes.contactInfo[];
+  public contacts : customTypes.contact[];
+  public participants : customTypes.contact[];
   constructor() {}
   ngOnInit(){
     this.participants = [];
@@ -20,13 +20,12 @@ export class CreateGroupComponent implements OnInit {
       this.createGroup.emit({name: form.groupName, participants: this.participants});
     }
   }
-  changeDetected(value: boolean, contact : customTypes.contactInfo){
+  changeDetected(value: boolean, contact : customTypes.contact){
     if(value){
       this.participants.push(contact);
     } else{
       let index = this.participants.indexOf(contact);
       if(index > -1) this.participants.splice(index, 1);
     }
-    console.log(this.participants);
   }
 }

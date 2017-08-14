@@ -2,11 +2,11 @@ import * as mongoose from 'mongoose';
 
 let Schema = mongoose.Schema;
 let messageSchema = new Schema({
-    id: String,
     date: Number,
     from: {type: Schema.Types.ObjectId, ref: 'User'},
     content: String,
-    type: String
+    type: String,
+    conversation: {type: Schema.Types.ObjectId, ref: 'Conversation'}
 });
 let Message = mongoose.model('Message', messageSchema);
 export {Message} 

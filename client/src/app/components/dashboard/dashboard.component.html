@@ -6,15 +6,15 @@
       <messages></messages>
       <div [ngSwitch]='tool.value'>
         <create-group *ngSwitchCase="'create-group'" [user]="myUser" (createGroup)="createGroupHandler($event)" ></create-group>
-        <conversations-list *ngSwitchCase="'conversation-list'" [conversations]="myUser.conversations" (conversationSelected)="changeConversation($event)" [user]="myUser"></conversations-list>
+        <conversations-list *ngSwitchCase="'conversation-list'" (conversationSelected)="changeConversation($event)" [user]="myUser"></conversations-list>
         <contact-list *ngSwitchCase="'contact-list'" [contacts]="myUser.contacts" (contactSelected)="privateConversation($event)" ></contact-list>
         <add-contact *ngSwitchCase="'add-contact'" [user]="myUser" ></add-contact>
         <settings *ngSwitchCase="'settings'" [user]="myUser"></settings>
       </div>
     </div>
     <div class="col-sm-8 offset-sm-4 col-md-9 offset-md-3 main">
-      <div *ngIf='conversation'>
-        <current-document [conversation]="conversation" [user]="myUser"></current-document>
+      <div *ngIf='selectedConv'>
+        <current-document [conversation]="selectedConv" [user]="myUser"></current-document>
         <send-message (send)="sendMessageHandler($event)" (typing)="typingHandler()" (stopTyping)="stopTypingHandler()" (focus)="onFocus()"></send-message>
       </div>
     </div>

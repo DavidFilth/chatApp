@@ -11,24 +11,24 @@ export class SocketService {
   constructor() {
   }
   connect(user){
-    this.socket = io('http://192.168.1.73:3000', {query: {userId:user}});
+    this.socket = io('http://192.168.1.86:3000', {query: {userId:user}});
   }
   sendMessage(rooms: string[], message : customTypes.Message, conversation: string){
     this.socket.emit('sendMessage', {rooms, message, conversation});
   }
-  acceptFriendRequest(contactId : string, user: customTypes.contactInfo){
+  acceptFriendRequest(contactId : string, user: customTypes.contact){
     this.socket.emit('acceptFriendRequest',{room: contactId, contact: user});
   }
-  sendFriendRequest(contactId: string, user: customTypes.contactInfo){
+  sendFriendRequest(contactId: string, user: customTypes.contact){
     this.socket.emit('sendFriendRequest', {room: contactId, contact: user});
   }
-  UserIsTyping(rooms: string[], conversation: string, contact: customTypes.contactInfo){
+  UserIsTyping(rooms: string[], conversation: string, contact: customTypes.contact){
     this.socket.emit('typing',{rooms, conversation, contact});
   }
-  UserStopTyping(rooms: string[], conversation: string, contact: customTypes.contactInfo){
+  UserStopTyping(rooms: string[], conversation: string, contact: customTypes.contact){
     this.socket.emit('stopTyping', {rooms, conversation, contact});
   }
-  newConversation(conversation: customTypes.conversationInfo, rooms: string[]){
+  newConversation(conversation: customTypes.conversationItem, rooms: string[]){
     this.socket.emit('newConversation', {conversation, rooms});
   }
   sendMyStatus(rooms : string[], userId: string, status: boolean){

@@ -27,7 +27,13 @@ passport.use(new LocalStrategy({
   function (email, password, done) {
     User.findOne({ email: email })
       .populate('contacts',' _id name username email')
-      .populate({path: 'conversations', select: '_id name participants type', populate:{path:'participants', select:'_id name username email'}})
+      .populate({path: 'conversations.info', populate: [{
+        path: 'participants', select: '_id name username email'
+      },{
+        path: 'lastMessage', populate: {path:'from', select: '_id name username email'}
+      },{
+        path: 'admin', select: '_id name username email'
+      }]})
       .populate('pendingRequests', '_id name username email')
       .exec(function (err, user: any) {
       if (err) { return done(err); }

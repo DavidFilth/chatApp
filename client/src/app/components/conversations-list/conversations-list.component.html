@@ -6,12 +6,12 @@
                 <img src="http://placehold.it/70x70" alt="none" class="avatar">
             </div>
             <div class="contact-data">
-                <h5> {{ getTitle(conv) }} <span class="badge badge-pill badge-danger" *ngIf="conv.unreadMessages > 0"> {{ conv.unreadMessages }}</span>                    </h5>
-                <div *ngIf="conv.lastMessage && conv.lastMessage.from">
-                    <p class="lastMessage mb-0"> <strong>{{conv.lastMessage.from.name }}: </strong> {{conv.lastMessage.content}}</p>
-                    <p class="dateMessage mb-0"> {{conv.lastMessage.date | date:'short'}}</p>
-                    <p *ngIf="conv.usersTyping">
-                        <span *ngFor="let contact of conv.usersTyping"> {{contact.name}} <i class="fa fa-commenting-o" aria-hidden="true"></i> </span>
+                <h5> {{ getTitle(conv.info) }} <span class="badge badge-pill badge-danger" *ngIf="conv.unreadMessages > 0"> {{ conv.unreadMessages }}</span></h5>
+                <div *ngIf="conv.info.lastMessage && conv.info.lastMessage.from">
+                    <p class="lastMessage mb-0"> <strong>{{conv.info.lastMessage.from.name }}: </strong> {{conv.info.lastMessage.content}}</p>
+                    <p class="dateMessage mb-0"> {{conv.info.lastMessage.date | date:'short'}}</p>
+                    <p *ngIf="conv.info.usersTyping">
+                        <span *ngFor="let contact of conv.info.usersTyping"> {{contact.name}} <i class="fa fa-commenting-o" aria-hidden="true"></i> </span>
                     </p>
                 </div>
             </div>

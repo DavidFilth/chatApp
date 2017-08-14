@@ -4,9 +4,9 @@
     </div>
     <div class="conversation-data">
         <h5> {{ getTitle() }} </h5>
-        <p *ngIf="conversation.type === 'ptop' && checkStatus()">Online</p>
-        <p *ngIf="conversation.type === 'group'">
-            <span *ngFor="let contact of conversation.participants">
+        <p *ngIf="conversation.info.type === 'ptop' && checkStatus()">Online</p>
+        <p *ngIf="conversation.info.type === 'group'">
+            <span *ngFor="let contact of conversation.info.participants">
                 {{ contact.name }} ({{contact.email}}),
             </span>
         </p>

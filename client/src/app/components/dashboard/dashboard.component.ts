@@ -17,7 +17,7 @@ export class DashboardComponent{
   @ViewChild(CurrentDocumentComponent) public document : CurrentDocumentComponent;
   public tool: customTypes.tool;
   public myUser : customTypes.User;
-  public conversation : customTypes.conversationInfo;
+  public selectedConv : customTypes.conversationItem;
   constructor(public auth: AuthenticationService, 
     public userServ : UsersService,
     public socket: SocketService, 
@@ -28,28 +28,28 @@ export class DashboardComponent{
     this.socket.connect(this.myUser._id);
     this.socket.sendMyStatus(this.myUser.contacts.map(contact => contact._id), this.myUser._id, true);
     this.socket.incomingConversation()
-      .subscribe((data: customTypes.conversationInfo)=>{
-      if(data.type === 'group'){
-        this.messages.emit({content: `You have been added to ${data.name}`, type: 'alert-info'});
+      .subscribe((data: customTypes.conversationItem)=>{
+      if(data.info.type === 'group'){
+        this.messages.emit({content: `You have been added to ${data.info.name}`, type: 'alert-info'});
       } 
       this.myUser.conversations.push(data);
     });
     this.socket.getMessage()
       .subscribe(data =>{
       for(let i = 0; i < this.myUser.conversations.length; i++){
-        if(this.myUser.conversations[i]._id === data.conversationId){
+        if(this.myUser.conversations[i].info._id === data.conversationId){
           this.myUser.conversations[i].unreadMessages++;
-          this.myUser.conversations[i].lastMessage = data.message;
+          this.myUser.conversations[i].info.lastMessage = data.message;
         }
       }
     });
     this.socket.getAcceptedFriendRequests()
-      .subscribe((data: customTypes.contactInfo)=>{
+      .subscribe((data: customTypes.contact)=>{
         this.myUser.contacts.push(data);
         this.messages.emit({content: `${data.name} has accepted your friendRequest`, type:'alert-info'});
       });
     this.socket.incomingFriendRequest()
-      .subscribe((data : customTypes.contactInfo)=>{
+      .subscribe((data : customTypes.contact)=>{
         this.myUser.pendingRequests.push(data);
         this.messages.emit({content: `You have a new friendship request from ${data.name}`, type: 'alert-info' });
       });
@@ -65,58 +65,61 @@ export class DashboardComponent{
         if(index > -1) this.myUser.contacts[index].status = data.status;
       });
   }
-  changeConversation(conversation : customTypes.conversationInfo){
-    this.conversation = conversation;
-    conversation.unreadMessages = 0;
-    this.userServ.searchConversation(conversation._id)
-      .subscribe((data: customTypes.conversationInfo )=>{
-        this.conversation.messages = data.messages;
+  changeConversation(incomingConv : customTypes.conversationItem){
+    this.selectedConv = incomingConv;
+    this.selectedConv.unreadMessages = 0;
+    this.userServ.clearUnreadMessages(this.myUser._id, this.selectedConv.info._id)
+    .subscribe(res => res);
+    this.userServ.getMessages(this.selectedConv.info._id)
+      .subscribe((data: customTypes.Message[])=>{
+        this.selectedConv.messages = data;
         setTimeout(()=>this.document.scrollToBottom(),1);
       });
+    
   }
   sendMessageHandler(form: customTypes.messageForm){
-    let message = this.commonFn.newMessageObject(new Date(), this.myUser.getUserInfo(), form.message, 'text');
-    if(this.conversation.messages.length === 0 && this.conversation.type === 'ptop'){
-      this.myUser.conversations.push(this.conversation);
-      this.socket.newConversation(this.conversation, [this.commonFn.contactFromPtoP(this.conversation.participants, this.myUser._id)._id]);
+    let message = this.commonFn.newMessageObject(new Date(), this.myUser.getUserInfo(), form.message, 'text', this.selectedConv.info._id);
+    if(this.selectedConv.messages.length === 0 && this.selectedConv.info.type === 'ptop'){
+      this.myUser.conversations.push(this.selectedConv);
+      this.socket.newConversation(this.selectedConv, [this.commonFn.contactFromPtoP(this.selectedConv.info.participants, this.myUser._id)._id]);
     }
-    this.conversation.messages.push(message);
+    this.selectedConv.messages.push(message);
     setTimeout(()=>this.document.scrollToBottom(),1);
-    this.userServ.postMessage({message, conversationId: this.conversation._id}).subscribe((data : customTypes.Message)=>{
-      this.conversation.lastMessage = message;
+    this.userServ.postMessage({message, conversationId: this.selectedConv.info._id}).subscribe((data : customTypes.Message)=>{
+      this.selectedConv.info.lastMessage = message;
     });
-    this.socket.sendMessage(this.conversation.participants.map(contact => contact._id), message, this.conversation._id);
+    this.socket.sendMessage(this.selectedConv.info.participants.map(contact => contact._id), message, this.selectedConv.info._id);
   }
   createGroupHandler(data: customTypes.groupForm){
-    let conv = this.commonFn.newConversationObject(data.name, 'group', [...data.participants, this.myUser.getUserInfo()]);
+    let conv = this.commonFn.newConversationObject(data.name, 'group', [...data.participants, this.myUser.getUserInfo()], this.myUser.getUserInfo());
     this.userServ.createConversation(conv)
-      .subscribe((res : customTypes.conversationInfo)=>{
-        conv._id = res._id;
-        this.myUser.conversations.push(conv);
-        this.socket.newConversation(conv, data.participants.map(contact => contact._id));
+      .subscribe((res : customTypes.Conversation)=>{
+        let convItem : customTypes.conversationItem = {unreadMessages: 1, info: res}
+        this.myUser.conversations.push(convItem);
+        this.socket.newConversation(convItem, data.participants.map(contact => contact._id));
       });
       this.tool.value = 'conversation-list';
   }
-  privateConversation(contact: customTypes.contactInfo){
-    // Search for the chat in the conversations of the user
-    let index = this.myUser.conversations.findIndex((chat)=>chat.type === 'ptop' && -1 !== chat.participants.findIndex(participant => participant._id === contact._id));
+  privateConversation(contact: customTypes.contact){
+    let index = this.myUser.conversations.findIndex((conv)=>conv.info.type === 'ptop' &&
+    conv.info.participants.findIndex(participant => participant._id === contact._id) !== -1);
     if(index !== -1) return this.changeConversation(this.myUser.conversations[index]);
     let conv = this.commonFn.newConversationObject(undefined, 'ptop', [contact, this.myUser.getUserInfo()]);
     this.userServ.createConversation(conv)
-      .subscribe((data : customTypes.conversationInfo)=>{
-        conv._id = data._id;
-        this.changeConversation(conv);
+      .subscribe((data : customTypes.Conversation)=>{
+        this.changeConversation({unreadMessages: 0, info: data});
       });
   }
   typingHandler(){
-    this.socket.UserIsTyping(this.conversation.participants.map(contact => contact._id), this.conversation._id, this.myUser.getUserInfo());
+    this.socket.UserIsTyping(this.selectedConv.info.participants.map(contact => contact._id), this.selectedConv.info._id, this.myUser.getUserInfo());
   }
   stopTypingHandler(){
-    this.socket.UserStopTyping(this.conversation.participants.map(contact => contact._id), this.conversation._id, this.myUser.getUserInfo());
+    this.socket.UserStopTyping(this.selectedConv.info.participants.map(contact => contact._id), this.selectedConv.info._id, this.myUser.getUserInfo());
   }
   onFocus(){
-    if(this.conversation){
-      this.conversation.unreadMessages = 0;
+    if(this.selectedConv){
+      this.selectedConv.unreadMessages = 0;
+      this.userServ.clearUnreadMessages(this.myUser._id, this.selectedConv.info._id).subscribe(res =>res);
     }
   }
 }
