@@ -61,4 +61,10 @@ export class UsersService {
     return this.http.post('/api/user/clearUnreadMessage', JSON.stringify({userId, conversationId}), {headers: headers})
       .map(res => res.json())
   }
+  updateUserInfo(data){
+    let headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    return this.http.post('/api/user/updateInfo', JSON.stringify(data), {headers: headers})
+      .map(res => res.json());
+  }
 }

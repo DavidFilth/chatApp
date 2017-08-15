@@ -122,4 +122,16 @@ export class DashboardComponent{
       this.userServ.clearUnreadMessages(this.myUser._id, this.selectedConv.info._id).subscribe(res =>res);
     }
   }
+  updateUser(changes){
+    changes['userId']=this.myUser._id;
+    this.userServ.updateUserInfo(changes)
+      .subscribe(res => res);
+    if(changes.username){
+      this.myUser.username = changes.username;
+    }
+    if(changes.language){
+      this.myUser.language = changes.language;
+    }
+    this.tool.value="conversation-list";
+  }
 }

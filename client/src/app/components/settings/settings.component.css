@@ -5,3 +5,6 @@ div.card{
     border: 0;
     box-shadow: none;
 }
+.card-block{
+    text-align: center;
+}

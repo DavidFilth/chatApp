@@ -60,4 +60,9 @@ declare namespace customTypes {
         status: number;
         contact: contact;
     }
+    export interface editableProperty{
+        disableEdition: boolean;
+        value: string;
+        default: string;
+    }
 }

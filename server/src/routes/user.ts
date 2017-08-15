@@ -186,4 +186,19 @@ userRoute.post('/clearUnreadMessage', function(req, res){
     }
   });
 });
+userRoute.post('/updateInfo', function(req, res){
+  User.findById(req.body.userId).exec((err, user : any)=>{
+    if(err){
+      res.send(err);
+    } else{
+      if(req.body.username){
+        user.username = req.body.username;
+      }
+      if(req.body.language){
+        user.language = req.body.language;
+      }
+      user.save();
+    }
+  });
+});
 export { userRoute }
