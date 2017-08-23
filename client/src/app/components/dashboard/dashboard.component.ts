@@ -77,8 +77,7 @@ export class DashboardComponent{
       });
     
   }
-  sendMessageHandler(form: customTypes.messageForm){
-    let message = this.commonFn.newMessageObject(new Date(), this.myUser.getUserInfo(), form.message, 'text', this.selectedConv.info._id);
+  sendMessageHandler(message: customTypes.Message){
     if(this.selectedConv.messages.length === 0 && this.selectedConv.info.type === 'ptop'){
       this.myUser.conversations.push(this.selectedConv);
       this.socket.newConversation(this.selectedConv, [this.commonFn.contactFromPtoP(this.selectedConv.info.participants, this.myUser._id)._id]);

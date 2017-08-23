@@ -65,4 +65,9 @@ declare namespace customTypes {
         value: string;
         default: string;
     }
+    export interface canvasPoint{
+        x: number;
+        y: number;
+        dragging: boolean; 
+    }
 }

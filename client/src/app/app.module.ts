@@ -27,7 +27,8 @@ import { SocketService } from './services/socket.service';
 import { SendMessageComponent } from './components/send-message/send-message.component';
 import { CreateGroupComponent } from './components/create-group/create-group.component';
 import { CustomPipe } from './pipes/custom.pipe';
-import { SettingsComponent } from './components/settings/settings.component'
+import { SettingsComponent } from './components/settings/settings.component';
+import { CanvasComponent } from './components/canvas/canvas.component'
 
 @NgModule({
   imports: [
@@ -53,7 +54,8 @@ import { SettingsComponent } from './components/settings/settings.component'
     SendMessageComponent,
     CreateGroupComponent,
     CustomPipe,
-    SettingsComponent
+    SettingsComponent,
+    CanvasComponent
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy }, 

@@ -27,5 +27,14 @@
     </div>
 </div>
 <div class="messages" #scrollMe>
-    <div *ngFor="let message of conversation.messages" class="arrow_box" [ngClass]="setMessageClass(message)"><strong> {{ message.from.name }} </strong> : {{message.content}} </div>
+    <div *ngFor="let message of conversation.messages" class="arrow_box" 
+        [ngClass]="setMessageClass(message)" [ngSwitch]="message.type">
+        <div *ngSwitchCase="'text'">
+            <strong> {{ message.from.name }}:</strong> {{message.content}}
+        </div>
+         <div *ngSwitchCase="'canvas'">
+             <div><strong> {{ message.from.name }}:</strong></div>
+             <app-canvas  [points]="message.content"></app-canvas>
+        </div>
+    </div>
 </div>

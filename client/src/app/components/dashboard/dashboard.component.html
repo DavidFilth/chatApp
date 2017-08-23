@@ -15,7 +15,8 @@
     <div class="col-sm-8 offset-sm-4 col-md-9 offset-md-3 main">
       <div *ngIf='selectedConv'>
         <current-document [conversation]="selectedConv" [user]="myUser"></current-document>
-        <send-message (send)="sendMessageHandler($event)" (typing)="typingHandler()" (stopTyping)="stopTypingHandler()" (focus)="onFocus()"></send-message>
+        <send-message (send)="sendMessageHandler($event)" (typing)="typingHandler()" 
+          [user]="myUser" [conversation]="selectedConv" (stopTyping)="stopTypingHandler()" (focus)="onFocus()"></send-message>
       </div>
     </div>
   </div>
